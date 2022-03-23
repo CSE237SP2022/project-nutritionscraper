@@ -3,6 +3,15 @@
   <groupId>project-nutritionscraper</groupId>
   <artifactId>project-nutritionscraper</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+	  <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-chrome-driver</artifactId>
+	    <version>4.1.2</version>
+	</dependency>
+	  
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
