@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.util.*;
 import java.io.File;
@@ -21,7 +22,9 @@ public class NutritionScraper {
 	public void setUp() {
 		
 		//set the chromedriver directory
-		System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+		//System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+		WebDriverManager.chromedriver().setup();
+
 		
 		//set chrome to headless mode (does not open chrome window)
 		ChromeOptions options = new ChromeOptions();
@@ -62,6 +65,7 @@ public class NutritionScraper {
 			catch(Exception e){
 				//Continue trying to get the website data
 				System.out.println("Failed to get nutrition data. Trying again.");
+				System.out.println(e);
 				continue;
 			}
 		}
@@ -214,7 +218,6 @@ public class NutritionScraper {
 		
 		String filePath = "resources/foodList.txt";
 		scraper.getAllFoodData(filePath);
-		
 		
 	}
 
