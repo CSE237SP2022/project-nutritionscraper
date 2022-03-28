@@ -8,6 +8,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 
 import java.util.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.lang.StringBuilder;
 
 
 public class NutritionScraper {
@@ -19,7 +23,7 @@ public class NutritionScraper {
 		//set the chromedriver directory
 		System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
 		
-		//set chrome to headless mode
+		//set chrome to headless mode (does not open chrome window)
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless");		
 		
@@ -27,10 +31,12 @@ public class NutritionScraper {
 		driver = new ChromeDriver(options);
 	}
 	
-	public Map<String, Double> getNutritionData(String url) {
+	//method to get the nutrition info for a single food
+	public Map<String, String> getNutritionData(String url) {
 		
 		boolean success = false;
 		
+		//keep trying to get the nutrition data until no errors occur
 		while(!success) {
 			
 			try {
@@ -60,6 +66,8 @@ public class NutritionScraper {
 			}
 		}
 		
+		String food_name = driver.findElement(By.className("facts-heading")).getText();
+		
 		//find the web element containing the nutrition information tables
 		WebElement raw_nutrition_code = driver.findElement(By.id("NutritionInformationSlide"));
 		
@@ -69,6 +77,7 @@ public class NutritionScraper {
 		//initialize empty list to hold the raw nutrient data from the tables
 		List<WebElement> raw_nutrition_data = new ArrayList<WebElement>();
 		
+		//put all nutrients listed in the the raw tables into a single list;
 		for (WebElement table : raw_nutrition_tables) {
 			
 			//split the table into individual web elements for each nutritent
@@ -79,8 +88,9 @@ public class NutritionScraper {
 		}
 		
 		//create an empty hashmap to hold the nutrient name and value
-		Map<String, Double> nutrients = new HashMap<>();
+		Map<String, String> nutrients = new HashMap<>();
 		
+		nutrients.put("Food Name", food_name);
 		//iterate through the nutrient web elements
 		for (WebElement nutrient : raw_nutrition_data) {
 			
@@ -126,16 +136,78 @@ public class NutritionScraper {
 				nutrient_name = "Calories From Alcohol";
 			}
 			
+			String nutrient_value_string = Double.toString(nutrient_value);
 			//put the nutrient name and value into the hashmap
-			nutrients.put(nutrient_name, nutrient_value);
-			
+			nutrients.put(nutrient_name, nutrient_value_string);
 		}
 		
 		//quit the driver instance after we are finished getting the nutrient information
-		driver.quit();
 		
+		//return the nutrients hashmap
 		return nutrients;
 	}
+	
+	public static String tableFormat(List<List<String>> rows) {
+		int[] maxColLength = new int[rows.get(0).size()];
+		for (List<String> row: rows) {
+			for (int i=0; i<row.size(); i++) {
+				maxColLength[i] = Math.max(maxColLength[i], row.get(i).length());
+			}
+		}
+		
+		StringBuilder tableFormatBuilder = new StringBuilder();
+		for (int colLen : maxColLength) {
+			tableFormatBuilder.append("%-").append(colLen+3).append("s");
+		}
+		String tableFormat = tableFormatBuilder.toString();
+		StringBuilder table = new StringBuilder();
+		for (List<String> row : rows) {
+			table.append(String.format(tableFormat, row.toArray(new String[0]))).append("\n");
+		}
+		
+		return table.toString();
+		
+	}
+	
+	
+	public void getAllFoodData(String filePath) {
+		//create an empty arraylist to hold the url strings
+		List<String> urls = new ArrayList<String>();
+		//get the urls from the file
+		try {
+			urls = Files.readAllLines(new File(filePath).toPath());
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		List<Map<String, String>> nutrients = new ArrayList<>();
+		
+		Set<String> nutrientKeys = new HashSet<>();
+		//iterate throught the urls
+		for (String url : urls) {
+			Map<String, String> foodItem = getNutritionData(url);
+			nutrients.add(foodItem);
+			nutrientKeys = foodItem.keySet();
+		}
+
+		List<List<String>> foodItems = new ArrayList<>();
+		for (String key : nutrientKeys) {
+			List<String> row = new ArrayList<>();
+			row.add(key);
+			Map<String, String> foodItem_ = new HashMap<>();
+			for (Map<String, String> foodItem : nutrients) {
+				row.add(foodItem.get(key));
+			}
+			foodItems.add(row);
+		}
+		
+		String table = tableFormat(foodItems);
+		System.out.println(table); 
+		
+		driver.quit();
+	}
+	
 		
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
@@ -146,11 +218,15 @@ public class NutritionScraper {
 		NutritionScraper scraper = new NutritionScraper();
 		String url = "https://nutritiondata.self.com/facts/cereal-grains-and-pasta/5718/2";
 		
-		Map<String, Double> nutrients = scraper.getNutritionData(url);
+	
 		
-		for (Map.Entry<String, Double> nutrient : nutrients.entrySet()) {
-			System.out.println(nutrient.getKey() + " : " + nutrient.getValue());
-		}
+		String filePath = "resources/foodList.txt";
+		scraper.getAllFoodData(filePath);
+//		Map<String, Double> nutrients = scraper.getNutritionData(url);
+		
+//		for (Map.Entry<String, Double> nutrient : nutrients.entrySet()) {
+//			System.out.println(nutrient.getKey() + " : " + nutrient.getValue());
+//		}
 		
 		
 	}
