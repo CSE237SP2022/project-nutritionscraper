@@ -31,7 +31,7 @@ public class NutritionScraper {
 		driver = new ChromeDriver(options);
 	}
 	
-	//method to get the nutrition info for a single food
+	
 	public Map<String, String> getNutritionData(String url) {
 		
 		boolean success = false;
@@ -141,8 +141,6 @@ public class NutritionScraper {
 			nutrients.put(nutrient_name, nutrient_value_string);
 		}
 		
-		//quit the driver instance after we are finished getting the nutrient information
-		
 		//return the nutrients hashmap
 		return nutrients;
 	}
@@ -165,10 +163,8 @@ public class NutritionScraper {
 			table.append(String.format(tableFormat, row.toArray(new String[0]))).append("\n");
 		}
 		
-		return table.toString();
-		
+		return table.toString();	
 	}
-	
 	
 	public void getAllFoodData(String filePath) {
 		//create an empty arraylist to hold the url strings
@@ -207,8 +203,7 @@ public class NutritionScraper {
 		
 		driver.quit();
 	}
-	
-		
+			
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
@@ -216,17 +211,9 @@ public class NutritionScraper {
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
-		String url = "https://nutritiondata.self.com/facts/cereal-grains-and-pasta/5718/2";
-		
-	
 		
 		String filePath = "resources/foodList.txt";
 		scraper.getAllFoodData(filePath);
-//		Map<String, Double> nutrients = scraper.getNutritionData(url);
-		
-//		for (Map.Entry<String, Double> nutrient : nutrients.entrySet()) {
-//			System.out.println(nutrient.getKey() + " : " + nutrient.getValue());
-//		}
 		
 		
 	}
