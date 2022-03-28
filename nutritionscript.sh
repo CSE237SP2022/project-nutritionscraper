@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-
+cd src/NutritionScraper
 javac NutritionScraper.java
 java NutritionScraper.java 
-echo Insert text file
-read text file
+TEXTFILE=cat $1
+read TEXTFILE
 
 
