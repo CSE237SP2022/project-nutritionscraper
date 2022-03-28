@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo Input URL for Nutritional Info
-read URL
+
+
+javac NutritionScraper.java
+java NutritionScraper.java 
+echo Insert text file
+read text file
 
 
