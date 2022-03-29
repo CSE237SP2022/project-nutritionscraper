@@ -1,10 +1,13 @@
 #!/bin/bash
 
-
-cd src/NutritionScraper
+git checkout main
+cd resources 
+TEXTFILE=$(cat foodList.txt)
+cd src
 javac NutritionScraper.java
 java NutritionScraper.java 
-TEXTFILE=cat $1
 read TEXTFILE
+cd ..
+git checkout GautamiAndEfimia
 
 
