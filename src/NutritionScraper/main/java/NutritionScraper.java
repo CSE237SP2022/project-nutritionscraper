@@ -1,4 +1,4 @@
-package NutritionScraper;
+package NutritionScraper.main.java;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +13,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
-
 
 public class NutritionScraper {
 	
@@ -57,7 +56,6 @@ public class NutritionScraper {
 	public String getTableFormatString() {
 		return tableFormatString;
 	}
-	
 	
 	public Map<String, String> getNutritionData(String url) {
 		
@@ -232,7 +230,6 @@ public class NutritionScraper {
 			nutrientKeys = foodItem.keySet();
 		}
 		
-		
 
 		List<List<String>> foodItems = new ArrayList<>();
 		for (String key : nutrientKeys) {
@@ -264,12 +261,11 @@ public class NutritionScraper {
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
 		
-		String filePath = "resources/foodList.txt";
+		String filePath = args[0];
 		List<String> urls = scraper.getUrls(filePath);
 		String table = scraper.getAllFoodData(urls);
 		System.out.println(table);
 		scraper.quitDriver();
-		
 	}
 
 }
