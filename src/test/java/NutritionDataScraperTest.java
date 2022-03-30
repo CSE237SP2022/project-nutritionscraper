@@ -1,8 +1,10 @@
-package NutritionScraper;
+package test.java;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import NutritionScraper.main.java.NutritionScraper;
 
 import java.util.*;
 
