@@ -247,12 +247,10 @@ public class NutritionScraper {
 		return table;
 	
 	}
-			
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
 	}
-	
 	public void quitDriver() {
 		driver.quit();
 		driverActive = false;
