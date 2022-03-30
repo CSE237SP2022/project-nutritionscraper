@@ -18,4 +18,11 @@
 
 
 
-### How to access this code through the command line 
+### How to compile the code
+- Download maven. This can be done by executing the command brew install maven
+- navigate to the project project directory (/project-nutritionscraper)
+- execute the command "mvn clean compile assembly:single"
+
+### How to run the program
+- First open the foodList.txt file located at /project-nutritionscraper. This file contains a list of foods from https://nutritiondata.self.com/. Add any desired foods into by entering the URL of the food on a new line. Save and close the file when done.
+- Execute the bash script with the filepath of the foodList.txt file as the first argument (e.g. bash nutritionscript.sh foodList.txt ). If the program keeps outputting "Failed to get nutrition data. Trying again.", try exiting the program and re-running it. This error occurs due to pop-up ads on the website.
