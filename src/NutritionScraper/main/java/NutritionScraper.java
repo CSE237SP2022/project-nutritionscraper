@@ -265,5 +265,4 @@ public class NutritionScraper {
 		System.out.println(table);
 		scraper.quitDriver();
 	}
-
 }
