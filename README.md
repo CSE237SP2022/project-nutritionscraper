@@ -4,7 +4,8 @@
 - Tasks for next time: Add the ability for the user to add which information they wish to be output (likely through direct input or text file), and add the csv output formatting. 
 
 ### Efimia & Gautami user story 
-- Accomplished tasks: Created a bash script that compiles and runs the java program from the command line. I created a new branch in github from the command line to house this bash script while it is still in progress. 
+- Accomplished tasks: Created a bash script that compiles and runs the java program from the command line. 
+- Created a new branch in github from the command line to house this bash script while it is still in progress. 
 - Tasks for the next iteration: Get the nurtition info currently printing out in consol to print into a text file that then is opened and acessed by the bash script. Help with JUnit testing for new functionalities. 
 
 
