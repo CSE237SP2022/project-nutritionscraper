@@ -187,9 +187,23 @@ public class NutritionScraper {
 		//iterate throught the urls
 		for (String url : urls) {
 			Map<String, String> foodItem = getNutritionData(url);
+			//clean up entries in nutrients with non alphabetic keys 
+			Iterator<Map.Entry<String, String>> iterator = foodItem.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> entry = iterator.next();
+				String currNutrient = entry.getKey();
+				String cleanedUpNutrient = currNutrient.replaceAll("[^a-zA-Z]", "");
+				if (currNutrient.length() - cleanedUpNutrient.length() >1) {
+					iterator.remove();
+				}
+			}
+            
 			nutrients.add(foodItem);
 			nutrientKeys = foodItem.keySet();
 		}
+		
+		
+		
 
 		List<List<String>> foodItems = new ArrayList<>();
 		for (String key : nutrientKeys) {
@@ -201,6 +215,8 @@ public class NutritionScraper {
 			}
 			foodItems.add(row);
 		}
+		
+
 		
 		String table = tableFormat(foodItems);
 		System.out.println(table); 
