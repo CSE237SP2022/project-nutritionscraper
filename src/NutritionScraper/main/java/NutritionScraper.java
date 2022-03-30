@@ -242,6 +242,7 @@ public class NutritionScraper {
 			foodItems.add(row);
 		}
 		
+		
 		String table = tableFormat(foodItems);
 		
 		return table;
