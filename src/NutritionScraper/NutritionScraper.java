@@ -18,13 +18,14 @@ import java.lang.StringBuilder;
 public class NutritionScraper {
 	
 	private WebDriver driver;
+	private boolean driverActive;
+	private static String tableFormatString;
+	private static List<Map<String, String>> nutrientTables; 
 	
 	public void setUp() {
 		
-		//set the chromedriver directory
-		//System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+		//create a chromedriver instance
 		WebDriverManager.chromedriver().setup();
-
 		
 		//set chrome to headless mode (does not open chrome window)
 		ChromeOptions options = new ChromeOptions();
@@ -32,6 +33,29 @@ public class NutritionScraper {
 		
 		//compile the webdriver
 		driver = new ChromeDriver(options);
+		
+		driverActive = true;
+	}
+	
+	public boolean isDriverActive() {
+		return driverActive;
+	}
+	
+	public void setNutrientTables(List<Map<String, String>> nutrTables) {
+		nutrientTables = nutrTables;
+	}
+	
+	
+	public static List<Map<String, String>> getNutrientTables() {
+		return nutrientTables;
+	}
+	
+	public static void setTableFormatString(String tableFormat) {
+		tableFormatString = tableFormat;
+	}
+	
+	public String getTableFormatString() {
+		return tableFormatString;
 	}
 	
 	
@@ -65,7 +89,6 @@ public class NutritionScraper {
 			catch(Exception e){
 				//Continue trying to get the website data
 				System.out.println("Failed to get nutrition data. Trying again.");
-				System.out.println(e);
 				continue;
 			}
 		}
@@ -116,10 +139,10 @@ public class NutritionScraper {
 			if (nutrient_value_str.equals("~")) {
 				nutrient_value = 0;
 			} 
-			else if (nutrient_unit == "mg") {
+			else if (nutrient_unit.equals("mg")) {
 				nutrient_value = Double.parseDouble(nutrient_value_str)/1E3;
 			}
-			else if (nutrient_unit == "mcg") {
+			else if (nutrient_unit.equals("mcg")) {
 				nutrient_value = Double.parseDouble(nutrient_value_str)/1E6;
 			}
 			else {
@@ -162,6 +185,8 @@ public class NutritionScraper {
 			tableFormatBuilder.append("%-").append(colLen+3).append("s");
 		}
 		String tableFormat = tableFormatBuilder.toString();
+		setTableFormatString(tableFormat);
+		
 		StringBuilder table = new StringBuilder();
 		for (List<String> row : rows) {
 			table.append(String.format(tableFormat, row.toArray(new String[0]))).append("\n");
@@ -170,7 +195,7 @@ public class NutritionScraper {
 		return table.toString();	
 	}
 	
-	public void getAllFoodData(String filePath) {
+	public List<String> getUrls(String filePath){
 		//create an empty arraylist to hold the url strings
 		List<String> urls = new ArrayList<String>();
 		//get the urls from the file
@@ -180,7 +205,12 @@ public class NutritionScraper {
 		catch(Exception e) {
 			System.out.println(e);
 		}
+		return urls;
+	}
+	
+	public String getAllFoodData(List<String> urls) {
 		
+		//create an empty list of maps to hold each food
 		List<Map<String, String>> nutrients = new ArrayList<>();
 		
 		Set<String> nutrientKeys = new HashSet<>();
@@ -193,7 +223,7 @@ public class NutritionScraper {
 				Map.Entry<String, String> entry = iterator.next();
 				String currNutrient = entry.getKey();
 				String cleanedUpNutrient = currNutrient.replaceAll("[^a-zA-Z]", "");
-				if (currNutrient.length() - cleanedUpNutrient.length() >1) {
+				if (currNutrient.length() - cleanedUpNutrient.length() > 1) {
 					iterator.remove();
 				}
 			}
@@ -201,7 +231,6 @@ public class NutritionScraper {
 			nutrients.add(foodItem);
 			nutrientKeys = foodItem.keySet();
 		}
-		
 		
 		
 
@@ -216,24 +245,30 @@ public class NutritionScraper {
 			foodItems.add(row);
 		}
 		
-
-		
 		String table = tableFormat(foodItems);
-		System.out.println(table); 
 		
-		driver.quit();
+		return table;
+	
 	}
 			
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
 	}
+	
+	public void quitDriver() {
+		driver.quit();
+		driverActive = false;
+	}
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
 		
 		String filePath = "resources/foodList.txt";
-		scraper.getAllFoodData(filePath);
+		List<String> urls = scraper.getUrls(filePath);
+		String table = scraper.getAllFoodData(urls);
+		System.out.println(table);
+		scraper.quitDriver();
 		
 	}
 
