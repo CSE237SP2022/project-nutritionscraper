@@ -95,20 +95,6 @@ class NutritionDataScraperTest {
 	}
 	
 	@Test
-	void testFirstFood() {
-		//test if getAllFoodData gets the correct first food
-		Map<String, String> white_rice = nutrientTables.get(0);
-		assertEquals(whiteRice, white_rice);
-	}
-	
-	@Test
-	void testSecondFood() {
-		//test if getAllFoodData gets the correct second food
-		Map<String, String> spinach_ = nutrientTables.get(1);
-		assertEquals(spinach, spinach_);
-	}
-	
-	@Test
 	void testTableFormat() {
 		//test if getAllFoodData gets the correct second food
 		String tableFormat = scraper.getTableFormatString();
@@ -123,10 +109,4 @@ class NutritionDataScraperTest {
 		assertFalse(inactive);
 	}
 	
-	
-
-	
-	
-	
-
 }
