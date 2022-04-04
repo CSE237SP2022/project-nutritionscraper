@@ -22,6 +22,11 @@ public class NutritionScraper {
 	private static String tableFormatString;
 	private static List<Map<String, String>> nutrientTables; 
 	
+	/**
+	 * Set up chromedriver instance and its parameters
+	 * @param void
+	 * @return void
+	 */
 	public void setUp() {
 		
 		//create a chromedriver instance
@@ -37,27 +42,57 @@ public class NutritionScraper {
 		driverActive = true;
 	}
 	
+	/**
+	 * Checks status of our chrome driver, is it active or not
+	 * @param void
+	 * @return boolean. True --> is active. False --> isn't active
+	 */
 	public boolean isDriverActive() {
 		return driverActive;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public void setNutrientTables(List<Map<String, String>> nutrTables) {
 		nutrientTables = nutrTables;
 	}
 	
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public static List<Map<String, String>> getNutrientTables() {
 		return nutrientTables;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public static void setTableFormatString(String tableFormat) {
 		tableFormatString = tableFormat;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public String getTableFormatString() {
 		return tableFormatString;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public Map<String, String> getNutritionData(String url) {
 		
 		boolean success = false;
@@ -172,6 +207,24 @@ public class NutritionScraper {
 	}
 	
 	/**
+	 * 
+	 * @param
+	 * @return
+	 */
+	public static void convert() {
+		
+	}
+	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
+	public static void nameReformatting() {
+		
+	}
+	
+	/**
 	 * Format all the food items and their respective nutrient value into a table
 	 * @param List<List<String>> rows
 	 * @return String table
@@ -217,7 +270,11 @@ public class NutritionScraper {
 		return urls;
 	}
 	
-	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public String getAllFoodData(List<String> urls) {
 		
 		//create an empty list of maps to hold each food
@@ -292,8 +349,11 @@ public class NutritionScraper {
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
-
-		String filePath = args[0];
+		
+		String[] _args = {"/Users/haiyili/git/project-nutritionscraper/foodList.txt"};
+		
+		
+		String filePath = _args[0];
 		List<String> urls = scraper.getUrls(filePath);
 		String table = scraper.getAllFoodData(urls);
 		System.out.println(table);
