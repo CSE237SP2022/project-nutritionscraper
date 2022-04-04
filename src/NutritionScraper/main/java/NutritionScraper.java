@@ -270,10 +270,21 @@ public class NutritionScraper {
 		return foodItem;
 	}
 	
+	/**
+	 * Setting up the scraper
+	 * @param void
+	 * @return void
+	 */
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
 	}
+	
+	/**
+	 * Quit driver 
+	 * @param void
+	 * @return void
+	 */
 	public void quitDriver() {
 		driver.quit();
 		driverActive = false;
