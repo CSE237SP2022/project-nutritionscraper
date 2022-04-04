@@ -270,10 +270,28 @@ public class NutritionScraper {
 		return foodItem;
 	}
 	
+<<<<<<< HEAD
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
 	}
+=======
+	/**
+	 * Setting up the scraper
+	 * @param void
+	 * @return void
+	 */
+	public NutritionScraper() {
+		//create a driver instance upon object creation.
+		setUp();
+	}
+	
+	/**
+	 * Quit driver 
+	 * @param void
+	 * @return void
+	 */
+>>>>>>> branch 'main' of https://github.com/CSE237SP2022/project-nutritionscraper.git
 	public void quitDriver() {
 		driver.quit();
 		driverActive = false;
