@@ -66,7 +66,7 @@ public class NutritionScraper {
 	 * 
 	 */
 	
-	public void getWebCode(String url) {
+	public List<String> getRawData(String url) {
 		boolean success = false;
 		
 		//keep trying to get the nutrition data until no errors occur
@@ -98,7 +98,107 @@ public class NutritionScraper {
 				continue;
 			}
 		}
+		
+		String food_name = driver.findElement(By.className("facts-heading")).getText();
+		
+		//find the web element containing the nutrition information tables
+		WebElement raw_nutrition_code = driver.findElement(By.id("NutritionInformationSlide"));
+		
+		//find the tables containing the nutrition information
+		List<WebElement> raw_nutrition_tables = raw_nutrition_code.findElements(By.className("groupBorder"));
+		
+		//initialize empty list to hold the raw nutrient data from the tables
+		List<WebElement> raw_nutrition_data = new ArrayList<WebElement>();
+		
+		//put all nutrients listed in the the raw tables into a single list;
+		for (WebElement table : raw_nutrition_tables) {
+			
+			//split the table into individual web elements for each nutritent
+			List<WebElement> nutrients = table.findElements(By.className("clearer"));
+			
+			//add the nutrient web elements to the raw_nutrient_data list
+			raw_nutrition_data.addAll(nutrients);
+		}
+		
+		List<String> rawScraperData = new ArrayList<String>();
+		
+		rawScraperData.add(food_name);
+		
+		for (WebElement nutrient : raw_nutrition_data) {
+			String raw_nutrient_text = nutrient.getText();
+			rawScraperData.add(raw_nutrient_text);
+		}
+		
+		return rawScraperData;
 	}
+	
+	public String convertToGrams(String nutrientValueStr, String nutrientUnit) {
+		double nutrientValue;
+		
+		//convert the nutrient amount into grams from the given unit if applicable
+		if (nutrientUnit.equals("~")) {
+			nutrientValue = 0;
+		} 
+		else if (nutrientUnit.equals("mg")) {
+			nutrientValue = Double.parseDouble(nutrientValueStr)/1E3;
+		}
+		else if (nutrientUnit.equals("mcg")) {
+			nutrientValue = Double.parseDouble(nutrientValueStr)/1E6;
+		}
+		else {
+			nutrientValue = Double.parseDouble(nutrientValueStr);
+		}
+		
+		return Double.toString(nutrientValue);
+	}
+	
+	public String renameNutrients(String nutrientName) {
+		nutrientName = nutrientName.trim();
+		
+		if (nutrientName.equals("From Carbohydrate")) {
+			return "Calories From Carbohydrate";
+		}
+		else if (nutrientName.equals("From Fat")) {
+			 return "Calories From Fat";
+		}
+		else if (nutrientName.equals("From Protein")) {
+			return "Calories From Protein";
+		}
+		else if (nutrientName.equals("From Alcohol")) {
+			return "Calories From Alcohol";
+		}
+		else {
+			return nutrientName;
+		}
+	}
+	
+	public Map<String, String> formatRawData(List<String> rawData) {
+		
+		Map<String, String> nutrients = new HashMap<>();
+		
+		nutrients.put("Food Name", rawData.get(0));
+		rawData.remove(0);
+		
+		for (String nutrient : rawData) {
+			
+			//get the web text containing the nutrient information
+				
+				//split the nutrient text into individual values
+				String[] nutrient_text_parsed = nutrient.split("\n");
+				
+				String nutrient_name = renameNutrients(nutrient_text_parsed[0]);				
+			
+				String nutrient_value = convertToGrams(nutrient_text_parsed[1], nutrient_text_parsed[2]);
+				//put the nutrient name and value into the hashmap
+				nutrients.put(nutrient_name, nutrient_value);
+		}
+		
+		//return the nutrients hashmap
+		return nutrients;
+	}
+	
+	
+	/*
 	
 	public Map<String, String> getNutritionData(String url) {
 		
@@ -140,7 +240,7 @@ public class NutritionScraper {
 		WebElement raw_nutrition_code = driver.findElement(By.id("NutritionInformationSlide"));
 		
 		//find the tables containing the nutrition information
-		List<WebElement> raw_nutrition_tables= raw_nutrition_code.findElements(By.className("groupBorder"));
+		List<WebElement> raw_nutrition_tables = raw_nutrition_code.findElements(By.className("groupBorder"));
 		
 		//initialize empty list to hold the raw nutrient data from the tables
 		List<WebElement> raw_nutrition_data = new ArrayList<WebElement>();
@@ -212,6 +312,8 @@ public class NutritionScraper {
 		//return the nutrients hashmap
 		return nutrients;
 	}
+	*/
+	
 	
 	/**
 	 * Format all the food items and their respective nutrient value into a table
@@ -275,7 +377,6 @@ public class NutritionScraper {
 			nutrientKeys = foodItem.keySet();
 		}
 		
-
 		List<List<String>> foodItems = new ArrayList<>();
 		for (String key : nutrientKeys) {
 			List<String> row = new ArrayList<>();
