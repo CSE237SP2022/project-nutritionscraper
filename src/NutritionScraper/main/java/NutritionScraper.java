@@ -1,4 +1,4 @@
-package NutritionScraper;
+package NutritionScraper.main.java;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.opentelemetry.exporter.logging.SystemOutLogExporter;
 
 import java.util.*;
 import java.io.File;
@@ -14,17 +15,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
 
-
 public class NutritionScraper {
 	
 	private WebDriver driver;
+	private boolean driverActive;
+	private static String tableFormatString;
+	private static List<Map<String, String>> nutrientTables; 
 	
 	public void setUp() {
 		
-		//set the chromedriver directory
-		//System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+		//create a chromedriver instance
 		WebDriverManager.chromedriver().setup();
-
 		
 		//set chrome to headless mode (does not open chrome window)
 		ChromeOptions options = new ChromeOptions();
@@ -32,8 +33,30 @@ public class NutritionScraper {
 		
 		//compile the webdriver
 		driver = new ChromeDriver(options);
+		
+		driverActive = true;
 	}
 	
+	public boolean isDriverActive() {
+		return driverActive;
+	}
+	
+	public void setNutrientTables(List<Map<String, String>> nutrTables) {
+		nutrientTables = nutrTables;
+	}
+	
+	
+	public static List<Map<String, String>> getNutrientTables() {
+		return nutrientTables;
+	}
+	
+	public static void setTableFormatString(String tableFormat) {
+		tableFormatString = tableFormat;
+	}
+	
+	public String getTableFormatString() {
+		return tableFormatString;
+	}
 	
 	public Map<String, String> getNutritionData(String url) {
 		
@@ -65,7 +88,6 @@ public class NutritionScraper {
 			catch(Exception e){
 				//Continue trying to get the website data
 				System.out.println("Failed to get nutrition data. Trying again.");
-				System.out.println(e);
 				continue;
 			}
 		}
@@ -116,10 +138,10 @@ public class NutritionScraper {
 			if (nutrient_value_str.equals("~")) {
 				nutrient_value = 0;
 			} 
-			else if (nutrient_unit == "mg") {
+			else if (nutrient_unit.equals("mg")) {
 				nutrient_value = Double.parseDouble(nutrient_value_str)/1E3;
 			}
-			else if (nutrient_unit == "mcg") {
+			else if (nutrient_unit.equals("mcg")) {
 				nutrient_value = Double.parseDouble(nutrient_value_str)/1E6;
 			}
 			else {
@@ -149,6 +171,11 @@ public class NutritionScraper {
 		return nutrients;
 	}
 	
+	/**
+	 * Format all the food items and their respective nutrient value into a table
+	 * @param List<List<String>> rows
+	 * @return String table
+	 */
 	public static String tableFormat(List<List<String>> rows) {
 		int[] maxColLength = new int[rows.get(0).size()];
 		for (List<String> row: rows) {
@@ -162,6 +189,8 @@ public class NutritionScraper {
 			tableFormatBuilder.append("%-").append(colLen+3).append("s");
 		}
 		String tableFormat = tableFormatBuilder.toString();
+		setTableFormatString(tableFormat);
+		
 		StringBuilder table = new StringBuilder();
 		for (List<String> row : rows) {
 			table.append(String.format(tableFormat, row.toArray(new String[0]))).append("\n");
@@ -170,7 +199,12 @@ public class NutritionScraper {
 		return table.toString();	
 	}
 	
-	public void getAllFoodData(String filePath) {
+	/**
+	 * Gets a list of urls to visit
+	 * @param String filePath
+	 * @return List<String> urls
+	 */
+	public List<String> getUrls(String filePath){
 		//create an empty arraylist to hold the url strings
 		List<String> urls = new ArrayList<String>();
 		//get the urls from the file
@@ -180,16 +214,25 @@ public class NutritionScraper {
 		catch(Exception e) {
 			System.out.println(e);
 		}
+		return urls;
+	}
+	
+	
+	public String getAllFoodData(List<String> urls) {
 		
+		//create an empty list of maps to hold each food
 		List<Map<String, String>> nutrients = new ArrayList<>();
 		
 		Set<String> nutrientKeys = new HashSet<>();
 		//iterate throught the urls
 		for (String url : urls) {
-			Map<String, String> foodItem = getNutritionData(url);
+//			Map<String, String> foodItem = getNutritionData(url);
+			Map<String, String> foodItem = cleanUpFoodItem(getNutritionData(url));
+			
 			nutrients.add(foodItem);
 			nutrientKeys = foodItem.keySet();
 		}
+		
 
 		List<List<String>> foodItems = new ArrayList<>();
 		for (String key : nutrientKeys) {
@@ -202,23 +245,47 @@ public class NutritionScraper {
 			foodItems.add(row);
 		}
 		
-		String table = tableFormat(foodItems);
-		System.out.println(table); 
 		
-		driver.quit();
+		String table = tableFormat(foodItems);
+		
+		return table;
+	
 	}
-			
+	
+	/**
+	 * Cleans up the foodItem map by removing problematic key value pairs that don't represent a nutrient and its value
+	 * @param Map<String, String> foodItem
+	 * @return Map<String, String> foodItem
+	 */
+	public Map<String, String> cleanUpFoodItem(Map<String, String> foodItem){
+		Iterator<Map.Entry<String, String>> iterator = foodItem.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
+			String currNutrient = entry.getKey();
+			String cleanedUpNutrient = currNutrient.replaceAll("[^a-zA-Z]", "");
+			if (currNutrient.length() - cleanedUpNutrient.length() > 1) {
+				iterator.remove();
+			}
+		}
+		return foodItem;
+	}
+	
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
 	}
+	public void quitDriver() {
+		driver.quit();
+		driverActive = false;
+	}
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
-		
-		String filePath = "resources/foodList.txt";
-		scraper.getAllFoodData(filePath);
-		
-	}
 
+		String filePath = args[0];
+		List<String> urls = scraper.getUrls(filePath);
+		String table = scraper.getAllFoodData(urls);
+		System.out.println(table);
+		scraper.quitDriver();
+	}
 }
