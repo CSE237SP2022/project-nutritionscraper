@@ -84,7 +84,6 @@ public class NutritionScraper {
 		return tableFormatString;
 	}
 	
-<<<<<<< HEAD
 	/*
 	 * This method navigates the to a given food url and selects
 	 * 100g as the serving size (which is a standard option across 
