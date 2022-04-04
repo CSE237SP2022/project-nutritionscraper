@@ -22,7 +22,7 @@ public class NutritionScraper {
 	private static String tableFormatString;
 	private static List<Map<String, String>> nutrientTables; 
 	
-	//This method sets up the chromedriver instance 
+
 	public void setUp() {
 		
 		//create a chromedriver instance
@@ -38,27 +38,53 @@ public class NutritionScraper {
 		driverActive = true;
 	}
 	
+	/**
+	 * Checks status of our chrome driver, is it active or not
+	 * @param void
+	 * @return boolean. True --> is active. False --> isn't active
+	 */
 	public boolean isDriverActive() {
 		return driverActive;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public void setNutrientTables(List<Map<String, String>> nutrTables) {
 		nutrientTables = nutrTables;
 	}
 	
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public static List<Map<String, String>> getNutrientTables() {
 		return nutrientTables;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public static void setTableFormatString(String tableFormat) {
 		tableFormatString = tableFormat;
 	}
 	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public String getTableFormatString() {
 		return tableFormatString;
 	}
 	
+<<<<<<< HEAD
 	/*
 	 * This method navigates the to a given food url and selects
 	 * 100g as the serving size (which is a standard option across 
@@ -208,8 +234,7 @@ public class NutritionScraper {
 		return foodMap;	
 	}
 	
-	/*
-	
+/*
 	public Map<String, String> getNutritionData(String url) {
 		
 		boolean success = false;
@@ -326,6 +351,24 @@ public class NutritionScraper {
 	
 	
 	/**
+	 * 
+	 * @param
+	 * @return
+	 */
+	public static void convert() {
+		
+	}
+	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
+	public static void nameReformatting() {
+		
+	}
+	
+	/**
 	 * Format all the food items and their respective nutrient value into a table
 	 * @param List<List<String>> rows
 	 * @return String table
@@ -371,7 +414,11 @@ public class NutritionScraper {
 		return urls;
 	}
 	
-	
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public String getAllFoodData(List<String> urls) {
 		
 		//create an empty list of maps to hold each food
@@ -423,10 +470,21 @@ public class NutritionScraper {
 		return foodItem;
 	}
 	
+	/**
+	 * Setting up the scraper
+	 * @param void
+	 * @return void
+	 */
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
 	}
+	
+	/**
+	 * Quit driver 
+	 * @param void
+	 * @return void
+	 */
 	public void quitDriver() {
 		driver.quit();
 		driverActive = false;
@@ -434,8 +492,11 @@ public class NutritionScraper {
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
-
-		String filePath = args[0];
+		
+		String[] _args = {"/Users/haiyili/git/project-nutritionscraper/foodList.txt"};
+		
+		
+		String filePath = _args[0];
 		List<String> urls = scraper.getUrls(filePath);
 		String table = scraper.getAllFoodData(urls);
 		System.out.println(table);
