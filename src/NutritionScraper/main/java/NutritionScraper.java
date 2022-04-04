@@ -66,7 +66,7 @@ public class NutritionScraper {
 	 * 
 	 */
 	
-	public List<String> getRawData(String url) {
+	public void goToFoodPage(String url) {
 		boolean success = false;
 		
 		//keep trying to get the nutrition data until no errors occur
@@ -98,6 +98,10 @@ public class NutritionScraper {
 				continue;
 			}
 		}
+		
+	}
+	
+	public List<String> getRawData() {
 		
 		String food_name = driver.findElement(By.className("facts-heading")).getText();
 		
@@ -172,7 +176,7 @@ public class NutritionScraper {
 		}
 	}
 	
-	public Map<String, String> formatRawData(List<String> rawData) {
+	public Map<String, String> mapRawData(List<String> rawData) {
 		
 		Map<String, String> nutrients = new HashMap<>();
 		
@@ -197,6 +201,12 @@ public class NutritionScraper {
 		return nutrients;
 	}
 	
+	public Map<String, String> getNutritionData(String url){
+		goToFoodPage(url);
+		List<String> rawFoodData = getRawData();
+		Map<String, String> foodMap = mapRawData(rawFoodData);
+		return foodMap;	
+	}
 	
 	/*
 	
