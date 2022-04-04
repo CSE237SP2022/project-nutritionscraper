@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.opentelemetry.exporter.logging.SystemOutLogExporter;
 
 import java.util.*;
 import java.io.File;
@@ -212,6 +213,11 @@ public class NutritionScraper {
 		return nutrients;
 	}
 	
+	/**
+	 * Format all the food items and their respective nutrient value into a table
+	 * @param List<List<String>> rows
+	 * @return String table
+	 */
 	public static String tableFormat(List<List<String>> rows) {
 		int[] maxColLength = new int[rows.get(0).size()];
 		for (List<String> row: rows) {
@@ -235,6 +241,11 @@ public class NutritionScraper {
 		return table.toString();	
 	}
 	
+	/**
+	 * Gets a list of urls to visit
+	 * @param String filePath
+	 * @return List<String> urls
+	 */
 	public List<String> getUrls(String filePath){
 		//create an empty arraylist to hold the url strings
 		List<String> urls = new ArrayList<String>();
@@ -248,6 +259,7 @@ public class NutritionScraper {
 		return urls;
 	}
 	
+	
 	public String getAllFoodData(List<String> urls) {
 		
 		//create an empty list of maps to hold each food
@@ -256,18 +268,9 @@ public class NutritionScraper {
 		Set<String> nutrientKeys = new HashSet<>();
 		//iterate throught the urls
 		for (String url : urls) {
-			Map<String, String> foodItem = getNutritionData(url);
-			//clean up entries in nutrients with non alphabetic keys 
-			Iterator<Map.Entry<String, String>> iterator = foodItem.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Map.Entry<String, String> entry = iterator.next();
-				String currNutrient = entry.getKey();
-				String cleanedUpNutrient = currNutrient.replaceAll("[^a-zA-Z]", "");
-				if (currNutrient.length() - cleanedUpNutrient.length() > 1) {
-					iterator.remove();
-				}
-			}
-            
+//			Map<String, String> foodItem = getNutritionData(url);
+			Map<String, String> foodItem = cleanUpFoodItem(getNutritionData(url));
+			
 			nutrients.add(foodItem);
 			nutrientKeys = foodItem.keySet();
 		}
@@ -290,6 +293,25 @@ public class NutritionScraper {
 		return table;
 	
 	}
+	
+	/**
+	 * Cleans up the foodItem map by removing problematic key value pairs that don't represent a nutrient and its value
+	 * @param Map<String, String> foodItem
+	 * @return Map<String, String> foodItem
+	 */
+	public Map<String, String> cleanUpFoodItem(Map<String, String> foodItem){
+		Iterator<Map.Entry<String, String>> iterator = foodItem.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
+			String currNutrient = entry.getKey();
+			String cleanedUpNutrient = currNutrient.replaceAll("[^a-zA-Z]", "");
+			if (currNutrient.length() - cleanedUpNutrient.length() > 1) {
+				iterator.remove();
+			}
+		}
+		return foodItem;
+	}
+	
 	public NutritionScraper() {
 		//create a driver instance upon object creation.
 		setUp();
@@ -301,7 +323,7 @@ public class NutritionScraper {
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
-		
+
 		String filePath = args[0];
 		List<String> urls = scraper.getUrls(filePath);
 		String table = scraper.getAllFoodData(urls);
