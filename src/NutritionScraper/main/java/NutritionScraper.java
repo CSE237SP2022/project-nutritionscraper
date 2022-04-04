@@ -21,6 +21,7 @@ public class NutritionScraper {
 	private static String tableFormatString;
 	private static List<Map<String, String>> nutrientTables; 
 	
+	//This method sets up the chromedriver instance 
 	public void setUp() {
 		
 		//create a chromedriver instance
@@ -55,6 +56,47 @@ public class NutritionScraper {
 	
 	public String getTableFormatString() {
 		return tableFormatString;
+	}
+	
+	/*
+	 * This method navigates the to a given food url and selects
+	 * 100g as the serving size (which is a standard option across 
+	 * all listed foods), and selects the extended nutrition facts 
+	 * 
+	 */
+	
+	public void getWebCode(String url) {
+		boolean success = false;
+		
+		//keep trying to get the nutrition data until no errors occur
+		while(!success) {
+			
+			try {
+				//get the website code
+				driver.get(url);
+				
+				//select 100g as the serving size
+				Select serving_size_100 = new Select(driver.findElement(By.name("serving")));
+				serving_size_100.selectByValue("100.0");
+				
+				//Expand dropdown tabs containing additional nutrition data
+				//reversing the list fixes errors where certain dropdown tabs cannot be clicked
+				List<WebElement> expand_nutrition_data = driver.findElements(By.className("expand_collapse"));
+				Collections.reverse(expand_nutrition_data);
+				for (WebElement tab : expand_nutrition_data) {
+					tab.click();
+				}
+				
+				//successfully obtained the website data; break the loop
+				success = true;
+			}
+			
+			catch(Exception e){
+				//Continue trying to get the website data
+				System.out.println("Failed to get nutrition data. Trying again.");
+				continue;
+			}
+		}
 	}
 	
 	public Map<String, String> getNutritionData(String url) {
