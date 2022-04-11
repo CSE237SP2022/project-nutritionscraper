@@ -49,6 +49,7 @@ public class PersonalNutritionInfo{
 	public static void main(String[] args) {
 		PersonalNutritionInfo personalNutritionInfo = new PersonalNutritionInfo();
 		personalNutritionInfo.setUp();
+		personalNutritionInfo.basalMetabolicRate();
 	}
 
 }
