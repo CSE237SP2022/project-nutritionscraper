@@ -24,20 +24,29 @@ public class PersonalNutritionInfo{
 		
 	}
 	
+	public double basalMetabolicRate() {
+		double lbm = leanBodyMass();
+		if(lbm != 0) {
+			double calories = 370 + (21.6*lbm);
+			return calories;
+		}
+		return 0;
+	}
+	
 	public double leanBodyMass(){
 		if(this.gender.equals("f")) {
-			double LBM = (0.252 * this.weight)+(0.473 * this.height) - 48.3;
-			return LBM;
+			double lbm = (0.252 * this.weight)+(0.473 * this.height) - 48.3;
+			return lbm;
 		}else if(this.gender.equals("m")) {
-			double LBM = (0.407 * this.weight)+(0.267 * this.height) - 19.2;
-			return LBM;
+			double lbm = (0.407 * this.weight)+(0.267 * this.height) - 19.2;
+			return lbm;
 		}
 		return 0;
 	}
 	
 	
 	
-	public static void main() {
+	public static void main(String[] args) {
 		PersonalNutritionInfo personalNutritionInfo = new PersonalNutritionInfo();
 		personalNutritionInfo.setUp();
 	}
