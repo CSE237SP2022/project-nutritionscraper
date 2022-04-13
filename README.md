@@ -40,6 +40,9 @@ Iteration 2:
 - Download maven. This can be done by executing the command brew install maven
 - navigate to the project project directory (/project-nutritionscraper)
 - execute the command "mvn clean compile assembly:single"
+- run the bash script:
+	- to list all nutrition info: bash nutritionscript.sh all
+	- to list specific nutrition info: bash nutritionscript.sh "<nutrient1, nutrient2...>"
 
 ### How to run the program
 - First open the foodList.txt file located at /project-nutritionscraper. This file contains a list of foods from https://nutritiondata.self.com/. Add any desired foods into by entering the URL of the food on a new line. Save and close the file when done.
