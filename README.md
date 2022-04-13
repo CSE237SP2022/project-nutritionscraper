@@ -10,10 +10,16 @@
 	
 
 ### Efimia user story 
-- Accomplished tasks: Created a bash script that compiles and runs the java program from the command line. 
-- Created a new branch in github from the command line to house this bash script while it is still in progress. 
-- Tasks for the next iteration: Get the nurtition info currently printing out in consol to print into a text file that then is opened and acessed by the bash script. Help with JUnit testing for new functionalities. 
-
+-Iteration 1:
+	- Accomplished tasks: Created a bash script that compiles and runs the java program from the command line. 
+	- Created a new branch in github from the command line to house this bash script while it is still in progress. 
+	- Tasks for the next iteration: Get the nurtition info currently printing out in consol to print into a text file that then is opened and acessed 		by the bash script. Help with JUnit testing for new functionalities. 
+-Iteration 2: 
+	-Accomplished tasks: Cretaed new class for personal nutrition info that asks for user input abou their height, weight, and gender. Created a 	
+	method to calucalte the lean body mass using the input of the users. Created a method to calculate the basal metabolic rate, using the lean body 
+	mass calculations. 
+	-Task for next iteration: Add a function that update the basal metabloic rate by factoring in activity level of the user.
+	
 ### Gautami user story: 
 - Accomplished tasks: Created and wrote the bash script that runs along with the Java program created (NutritionDataScraper). Made a new branch in github that is able to run with the bash script. Managed the project management aspect by creating cards on the project and seeing what tasks have been accomplished and still need to be done. 
 - Tasks for the next iteration: Write JUnit tests to ensure all of our functionalities are working as planned. Having all of the nutrition info that we're scraping to printed out in a file to be opened by the bash script. 
