@@ -39,7 +39,7 @@ public class NutritionScraper {
 	public void quitDriver() {
 		driver.quit();
 	}
-	
+
 	/*
 	 * This method navigates the to a given food url and selects
 	 * 100g as the serving size (which is a standard option across 
