@@ -84,6 +84,37 @@ class textParsingTest {
 		urls_list.add("https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2626/2");
 		assertEquals(urls_list, fetched_urls);
 	}
-
+	
+	@Test
+	void rawDataToMapKeys(){
+		List<String> rawDataList = new ArrayList<>();
+		rawDataList.add("Test Food");
+		rawDataList.add("testNutrient\n130\nmg");
+		rawDataList.add("18:00\n130\nmg");
+		rawDataList.add("From Fat\n100\nkj");
+		Map<String, String> mappedData = textParsing.mapRawData(rawDataList);
+		
+		//testing if the keys are placed & renamed in the map correctly
+		assertTrue(mappedData.containsKey("Food Name"));
+		assertTrue(mappedData.containsKey("testNutrient"));
+		assertTrue(mappedData.containsKey("Calories From Fat"));
+		assertFalse(mappedData.containsKey("18:00"));
+	}
+	
+	@Test
+	void rawDataToMapValues(){
+		List<String> rawDataList = new ArrayList<>();
+		rawDataList.add("Test Food");
+		rawDataList.add("testNutrient\n130\nmg");
+		rawDataList.add("18:00\n130\nmg");
+		rawDataList.add("From Fat\n100\nkj");
+		Map<String, String> mappedData = textParsing.mapRawData(rawDataList);
+		
+		//testing if the values get mapped & converted correctly
+		assertEquals(mappedData.get("Food Name"), "Test Food");
+		assertEquals(mappedData.get("testNutrient"), "0.13");
+		assertEquals(mappedData.get("Calories From Fat"), "100.0");		
+	}
+	
 
 }
