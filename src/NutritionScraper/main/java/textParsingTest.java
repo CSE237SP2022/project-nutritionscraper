@@ -92,7 +92,7 @@ class textParsingTest {
 		rawDataList.add("testNutrient\n130\nmg");
 		rawDataList.add("18:00\n130\nmg");
 		rawDataList.add("From Fat\n100\nkj");
-		Map<String, String> mappedData = textParsing.mapRawData(rawDataList);
+		Map<String, String> mappedData = textParsing.mapRawData(rawDataList, "all");
 		
 		//testing if the keys are placed & renamed in the map correctly
 		assertTrue(mappedData.containsKey("Food Name"));
@@ -108,7 +108,7 @@ class textParsingTest {
 		rawDataList.add("testNutrient\n130\nmg");
 		rawDataList.add("18:00\n130\nmg");
 		rawDataList.add("From Fat\n100\nkj");
-		Map<String, String> mappedData = textParsing.mapRawData(rawDataList);
+		Map<String, String> mappedData = textParsing.mapRawData(rawDataList, "all");
 		
 		//testing if the values get mapped & converted correctly
 		assertEquals(mappedData.get("Food Name"), "Test Food");

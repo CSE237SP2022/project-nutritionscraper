@@ -48,7 +48,7 @@ public class textParsing {
 		}
 	}
 	
-	public static Map<String, String> mapRawData(List<String> rawData) {
+	public static Map<String, String> mapRawData(List<String> rawData, String selectedNutrients) {
 			
 		Map<String, String> nutrients = new LinkedHashMap<>();
 		
@@ -67,6 +67,13 @@ public class textParsing {
 			if (nutrient_name.contains(":")) {
 				continue;
 			}
+			
+			if (!selectedNutrients.toLowerCase().equals("all")) {
+				if(!selectedNutrients.toLowerCase().contains(nutrient_name.toLowerCase())) {
+					continue;
+				}
+			}
+			
 		
 			String nutrient_value = convertToGrams(nutrient_text_parsed[1], nutrient_text_parsed[2]);
 			//put the nutrient name and value into the hashmap
