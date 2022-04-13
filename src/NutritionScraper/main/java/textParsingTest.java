@@ -84,6 +84,8 @@ class textParsingTest {
 		urls_list.add("https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2626/2");
 		assertEquals(urls_list, fetched_urls);
 	}
+	
+	
 
 
 }
