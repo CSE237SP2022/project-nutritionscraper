@@ -1,4 +1,4 @@
-package PersonalNutritionInfo.main.java;
+package NutritionScraper.main.java;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
@@ -8,8 +8,6 @@ import java.util.Scanner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-
-import NutritionScraper.main.java.NutritionScraper;
 
 class personalNutritionInfoUnitTest {
 	

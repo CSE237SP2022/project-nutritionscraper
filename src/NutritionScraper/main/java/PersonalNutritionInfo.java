@@ -1,4 +1,4 @@
-package PersonalNutritionInfo.main.java;
+package NutritionScraper.main.java;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
