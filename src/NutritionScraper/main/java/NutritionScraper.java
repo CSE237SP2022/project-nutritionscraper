@@ -145,6 +145,7 @@ public class NutritionScraper {
 			for (Map<String, String> foodItem : nutrients) {
 				row.add(foodItem.get(key));
 			}
+			
 			foodItems.add(row);
 		}
 		
