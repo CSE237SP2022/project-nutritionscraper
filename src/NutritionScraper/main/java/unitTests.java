@@ -41,7 +41,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the calorie information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Calories"));
 		assertEquals(nutritionData.get("Calories"), "23.0");
 	}
@@ -51,7 +51,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the carbohydrate information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Total Carbohydrate"));
 		assertEquals(nutritionData.get("Total Carbohydrate"), "3.6");
 	}
@@ -61,7 +61,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the fat information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Total Fat"));
 		assertEquals(nutritionData.get("Total Fat"), "0.4");
 	}
@@ -71,7 +71,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the extended protein information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Tryptophan"));
 		assertEquals(nutritionData.get("Tryptophan"), "0.039");
 	}
@@ -81,7 +81,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the extended vitamin information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Retinol"));
 		assertEquals(nutritionData.get("Retinol"), "0.0");
 	}
@@ -91,7 +91,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the mineral information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Calcium"));
 		assertEquals(nutritionData.get("Calcium"), "0.099");
 	}
@@ -101,7 +101,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the extended sterol information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Campesterol"));
 		assertEquals(nutritionData.get("Campesterol"), "0.0");
 	}
@@ -111,7 +111,7 @@ class unitTests {
 		//tests if the scraper correctly gets and formats the other miscellaneous nutrient information
 		String url = urls.get(0);
 		boolean isAtPage = scraper.goToFoodPage(url);
-		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url, "all");
 		assertTrue(nutritionData.containsKey("Water"));
 		assertEquals(nutritionData.get("Water"), "91.4");
 	}
@@ -119,7 +119,7 @@ class unitTests {
 	@Test
 	void getAllFoodDataTest_foodName() {
 		//checks if the first row of data is the food name, and checks if the foods are in the correct order
-		List<List<String>> foodData = scraper.getAllFoodData(urls);
+		List<List<String>> foodData = scraper.getAllFoodData(urls, "all");
 		List<String> foodNames = foodData.get(0);
 		
 		String category = foodNames.get(0);
@@ -135,7 +135,7 @@ class unitTests {
 	@Test
 	void getAllFoodDataTest_Nutrients() {
 		//checks if the the nutrient categorization and values are in the correct order & are mapped correctly (one being correct should imply all are correct)
-		List<List<String>> foodData = scraper.getAllFoodData(urls);
+		List<List<String>> foodData = scraper.getAllFoodData(urls, "all");
 		List<String> nutrientData = foodData.get(1);
 		
 		String category = nutrientData.get(0);
