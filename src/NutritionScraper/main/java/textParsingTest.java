@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.*;
+
 class textParsingTest {
 
 	@Test
@@ -72,6 +74,15 @@ class textParsingTest {
 		String initialName = "From Alcohol";
 		String converted = textParsing.renameNutrients(initialName);
 		assertEquals("Calories From Alcohol", converted);
+	}
+	
+	@Test
+	void readUrlsTest() {
+		List<String> fetched_urls = textParsing.getUrls("foodList.txt");
+		List<String> urls_list = new ArrayList<>();
+		urls_list.add("https://nutritiondata.self.com/facts/cereal-grains-and-pasta/5718/2");
+		urls_list.add("https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2626/2");
+		assertEquals(urls_list, fetched_urls);
 	}
 
 
