@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.opentelemetry.exporter.logging.SystemOutLogExporter;
 
 import java.util.*;
 import java.io.File;
@@ -18,9 +17,6 @@ import java.lang.StringBuilder;
 public class NutritionScraper {
 
 	private WebDriver driver;
-	private boolean driverActive;
-	private static String tableFormatString;
-	private static List<Map<String, String>> nutrientTables; 
 	
 	public void setUp() {
 		
@@ -33,8 +29,6 @@ public class NutritionScraper {
 		
 		//compile the webdriver
 		driver = new ChromeDriver(options);
-		
-		driverActive = true;
 	}
 	
 	public NutritionScraper() {
@@ -44,38 +38,15 @@ public class NutritionScraper {
 	
 	public void quitDriver() {
 		driver.quit();
-		driverActive = false;
 	}
 	
-	public boolean isDriverActive() {
-		return driverActive;
-	}
-	
-	public void setNutrientTables(List<Map<String, String>> nutrTables) {
-		nutrientTables = nutrTables;
-	}
-	
-	
-	public static List<Map<String, String>> getNutrientTables() {
-		return nutrientTables;
-	}
-	
-	public static void setTableFormatString(String tableFormat) {
-		tableFormatString = tableFormat;
-	}
-	
-	public String getTableFormatString() {
-		return tableFormatString;
-	}
-	
-
 	/*
 	 * This method navigates the to a given food url and selects
 	 * 100g as the serving size (which is a standard option across 
 	 * all listed foods), and selects the extended nutrition facts 
 	 * 
 	 */
-	public void goToFoodPage(String url) {
+	public boolean goToFoodPage(String url) {
 		boolean success = false;
 		
 		//keep trying to get the nutrition data until no errors occur
@@ -107,6 +78,8 @@ public class NutritionScraper {
 				continue;
 			}
 		}
+		
+		return success;
 	}
 	
 	public List<String> getRawData() {
@@ -169,7 +142,6 @@ public class NutritionScraper {
 		for (String key : nutrientKeys) {
 			List<String> row = new ArrayList<>();
 			row.add(key);
-			Map<String, String> foodItem_ = new HashMap<>();
 			for (Map<String, String> foodItem : nutrients) {
 				row.add(foodItem.get(key));
 			}
@@ -179,7 +151,6 @@ public class NutritionScraper {
 		String table = textParsing.tableFormat(foodItems);
 		
 		return table;
-	
 	}
 
 	public static void main(String[] args) {
