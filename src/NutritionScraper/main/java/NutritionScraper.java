@@ -124,7 +124,7 @@ public class NutritionScraper {
 		return foodMap;	
 		}
 	
-	public String getAllFoodData(List<String> urls) {
+	public List<List<String>> getAllFoodData(List<String> urls) {
 		
 		//create an empty list of maps to hold each food
 		List<Map<String, String>> nutrients = new ArrayList<>();
@@ -148,18 +148,17 @@ public class NutritionScraper {
 			
 			foodItems.add(row);
 		}
-		
-		String table = textParsing.tableFormat(foodItems);
-		
-		return table;
+				
+		return foodItems;
 	}
 
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
 		String filePath = args[0];
 		List<String> urls = textParsing.getUrls(filePath);
-		String table = scraper.getAllFoodData(urls);
-		System.out.println(table);
+		List<List<String>> table = scraper.getAllFoodData(urls);
 		scraper.quitDriver();
+		String stringTable = textParsing.tableFormat(table);
+		System.out.println(stringTable);
 	}
 }

@@ -10,105 +10,142 @@ import org.junit.jupiter.api.Test;
 
 class unitTests {
 	
+	/*
+	 * THESE TESTS CAN TAKE A WHILE TO RUN
+	 * THIS IS DUE TO THE UNIT TEST REINITIALIZING THE WEBSCRAPER AT EVERY TEST
+	 */
+	
 	public NutritionScraper scraper = new NutritionScraper();
-	public List<String> urls = scraper.getUrls("resources/foodList.txt");
-	public String nutritionTableString = scraper.getAllFoodData(urls);
-	public List<Map<String, String>> nutrientTables = scraper.getNutrientTables();
-	public Map<String, String> whiteRice = scraper.getNutritionData("https://nutritiondata.self.com/facts/cereal-grains-and-pasta/5718/2");
-	public Map<String, String> spinach = scraper.getNutritionData("https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2626/2");
-
+	public List<String> urls = textParsing.getUrls("foodListTest.txt");
+	
 	@Test
-	void ActiveWebDriver() {
-		// check if driver instance is created when NutritionScraper object is created (tests setUp method)
-		boolean active = scraper.isDriverActive();
-		assertTrue(active);
+	void goToFoodPageTest() {
+		
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		assertTrue(isAtPage);
 	}
 	
 	@Test
-	void readUrls() {
-		// check if urls are read correctly from text file (test file is located at resources/foodList.txt)
-		List<String> urls_test = new ArrayList<>();
-		urls_test.add("https://nutritiondata.self.com/facts/cereal-grains-and-pasta/5718/2");
-		urls_test.add("https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2626/2");
-		assertEquals(urls, urls_test);
-	}
-
-	@Test
-	void testGrams() {
-		// test if getNutritionData gets the correct values for grams
-		String calories = whiteRice.get("Calories");
-		assertEquals("130.0", calories);
+	void getRawDataTest() {
+		//tests if the scraper correctly gets the food name (should imply that all other raw data has been correctly collected)
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		List<String> rawData = scraper.getRawData();
+		String foodName = rawData.get(0);
+		assertEquals(foodName, "Spinach, raw");
 	}
 	
 	@Test
-	void testIU() {
-		//test if conversion from IU is correct
-		String vitA = whiteRice.get("Vitamin A");
-		assertEquals("0.0",vitA);
+	void getNutritionDataTest_Calories() {
+		//tests if the scraper correctly gets and formats the calorie information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Calories"));
+		assertEquals(nutritionData.get("Calories"), "23.0");
 	}
 	
 	@Test
-	void testMg() {
-		//test if conversion from is correct
-		String manganese = whiteRice.get("Manganese");
-		assertEquals("4.0E-4",manganese);
+	void getNutritionDataTest_Carbs() {
+		//tests if the scraper correctly gets and formats the carbohydrate information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Total Carbohydrate"));
+		assertEquals(nutritionData.get("Total Carbohydrate"), "3.6");
 	}
 	
 	@Test
-	void testMcg() {
-		//test if conversion from mcg is correct
-		String folate = whiteRice.get("Folate");
-		assertEquals("5.8E-5",folate);
+	void getNutritionDataTest_Fat() {
+		//tests if the scraper correctly gets and formats the fat information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Total Fat"));
+		assertEquals(nutritionData.get("Total Fat"), "0.4");
 	}
 	
 	@Test
-	void testCarbDropDown() {
-		//test if getNutritionData correctly expands carb dropdown
-		boolean carbDropDown = whiteRice.containsKey("Sucrose");
-		assertTrue(carbDropDown);
+	void getNutritionDataTest_Protein() {
+		//tests if the scraper correctly gets and formats the extended protein information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Tryptophan"));
+		assertEquals(nutritionData.get("Tryptophan"), "0.039");
 	}
 	
 	@Test
-	void testFatDropDown() {
-		//test if getNutritionData correctly expands fat dropdown
-		boolean fatDropDown = whiteRice.containsKey("4:00");
-		assertTrue(fatDropDown);
+	void getNutritionDataTest_Vitamins() {
+		//tests if the scraper correctly gets and formats the extended vitamin information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Retinol"));
+		assertEquals(nutritionData.get("Retinol"), "0.0");
 	}
 	
 	@Test
-	void testProteinDropDown() {
-		//test if getNutritionData correctly expands protein dropdown
-		boolean proteinDropDown = whiteRice.containsKey("Tryptophan");
-		assertTrue(proteinDropDown);
+	void getNutritionDataTest_Minerals() {
+		//tests if the scraper correctly gets and formats the mineral information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Calcium"));
+		assertEquals(nutritionData.get("Calcium"), "0.099");
 	}
 	
 	@Test
-	void testVitaminDropDown() {
-		//test if getNutritionData correctly expands vitamin dropdown
-		boolean vitaminDropDown = whiteRice.containsKey("Retinol");
-		assertTrue(vitaminDropDown);
+	void getNutritionDataTest_Sterols() {
+		//tests if the scraper correctly gets and formats the extended sterol information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Campesterol"));
+		assertEquals(nutritionData.get("Campesterol"), "0.0");
 	}
 	
 	@Test
-	void testSterolDropDown() {
-		//test if getNutritionData correctly expands sterol dropdown
-		boolean sterolDropDown = whiteRice.containsKey("Campesterol");
-		assertTrue(sterolDropDown);
+	void getNutritionDataTest_Other() {
+		//tests if the scraper correctly gets and formats the other miscellaneous nutrient information
+		String url = urls.get(0);
+		boolean isAtPage = scraper.goToFoodPage(url);
+		Map<String, String> nutritionData = scraper.getNutritionData(url);
+		assertTrue(nutritionData.containsKey("Water"));
+		assertEquals(nutritionData.get("Water"), "91.4");
 	}
 	
 	@Test
-	void testTableFormat() {
-		//test if getAllFoodData gets the correct second food
-		String tableFormat = scraper.getTableFormatString();
-		String correctTableFormat = "%-22s%-36s%-15s";
-		assertEquals(tableFormat, correctTableFormat);
+	void getAllFoodDataTest_foodName() {
+		//checks if the first row of data is the food name, and checks if the foods are in the correct order
+		List<List<String>> foodData = scraper.getAllFoodData(urls);
+		List<String> foodNames = foodData.get(0);
+		
+		String category = foodNames.get(0);
+		assertEquals("Food Name", category);
+		
+		String food1 = foodNames.get(1);
+		assertEquals(food1, "Spinach, raw");
+		
+		String food2 = foodNames.get(2);
+		assertEquals(food2, "Rice, white, medium-grain, cooked");
 	}
 	
 	@Test
-	void InactiveWebDriver() {
-		scraper.quitDriver();
-		boolean inactive = scraper.isDriverActive();
-		assertFalse(inactive);
+	void getAllFoodDataTest_Nutrients() {
+		//checks if the the nutrient categorization and values are in the correct order & are mapped correctly (one being correct should imply all are correct)
+		List<List<String>> foodData = scraper.getAllFoodData(urls);
+		List<String> nutrientData = foodData.get(1);
+		
+		String category = nutrientData.get(0);
+		assertEquals("Calories", category);
+		
+		String food1 = nutrientData.get(1);
+		assertEquals(food1, "23.0");
+		
+		String food2 = nutrientData.get(2);
+		assertEquals(food2, "130.0");
 	}
 
 }
