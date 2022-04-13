@@ -13,8 +13,8 @@
 - Tasks for the next iteration: Write JUnit tests to ensure all of our functionalities are working as planned. Having all of the nutrition info that we're scraping to printed out in a file to be opened by the bash script. 
 
 ### Constance user story 
-- Accomplished tasks: 1. Cleaned up the NutritionDataScraper output table, allowing it to exclude key value pairs exceptions in the scraping process. 2. Created and managed project tracking board, for project management and task assignment.   
-- Tasks for next time: Write 1. JUnit tests for different functionalities, catching server errors and exceptions. 2. clean up NutritionDataScraper class code, following clean code principles. 
+- Accomplished tasks (iteration 2): 1. Wrote JUnit tests for PersonalNutritionInfo. 2. Reformatted and applied clean code practices to PersonalNutritionInfo. 3. Cleaned up NutritionDataScraper class code 4. Upkept and majaged project tracking board.   
+- Tasks for next time: 1. Explore how LBM(lean body mass) and BMR(basal metabolic rate) can add value to the foodItems in our input.txt file.
 
 
 
