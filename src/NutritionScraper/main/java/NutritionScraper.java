@@ -37,6 +37,16 @@ public class NutritionScraper {
 		driverActive = true;
 	}
 	
+	public NutritionScraper() {
+		//create a driver instance upon object creation.
+		setUp();
+	}
+	
+	public void quitDriver() {
+		driver.quit();
+		driverActive = false;
+	}
+	
 	public boolean isDriverActive() {
 		return driverActive;
 	}
@@ -171,17 +181,6 @@ public class NutritionScraper {
 		
 		return table;
 	
-	}
-	
-	
-	public NutritionScraper() {
-		//create a driver instance upon object creation.
-		setUp();
-	}
-	
-	public void quitDriver() {
-		driver.quit();
-		driverActive = false;
 	}
 
 	public static void main(String[] args) {
