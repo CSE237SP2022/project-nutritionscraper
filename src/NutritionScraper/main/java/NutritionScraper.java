@@ -151,7 +151,6 @@ public class NutritionScraper {
 		return foodMap;	
 		}
 	
-	
 	public String getAllFoodData(List<String> urls) {
 		
 		//create an empty list of maps to hold each food
