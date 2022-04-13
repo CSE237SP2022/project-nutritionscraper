@@ -18,9 +18,6 @@ import java.lang.StringBuilder;
 public class NutritionScraper {
 
 	private WebDriver driver;
-	private boolean driverActive;
-	private static String tableFormatString;
-	private static List<Map<String, String>> nutrientTables; 
 	
 	public void setUp() {
 		
@@ -33,8 +30,6 @@ public class NutritionScraper {
 		
 		//compile the webdriver
 		driver = new ChromeDriver(options);
-		
-		driverActive = true;
 	}
 	
 	public NutritionScraper() {
@@ -44,30 +39,7 @@ public class NutritionScraper {
 	
 	public void quitDriver() {
 		driver.quit();
-		driverActive = false;
 	}
-	
-	public boolean isDriverActive() {
-		return driverActive;
-	}
-	
-	public void setNutrientTables(List<Map<String, String>> nutrTables) {
-		nutrientTables = nutrTables;
-	}
-	
-	
-	public static List<Map<String, String>> getNutrientTables() {
-		return nutrientTables;
-	}
-	
-	public static void setTableFormatString(String tableFormat) {
-		tableFormatString = tableFormat;
-	}
-	
-	public String getTableFormatString() {
-		return tableFormatString;
-	}
-	
 
 	/*
 	 * This method navigates the to a given food url and selects
@@ -169,7 +141,6 @@ public class NutritionScraper {
 		for (String key : nutrientKeys) {
 			List<String> row = new ArrayList<>();
 			row.add(key);
-			Map<String, String> foodItem_ = new HashMap<>();
 			for (Map<String, String> foodItem : nutrients) {
 				row.add(foodItem.get(key));
 			}
