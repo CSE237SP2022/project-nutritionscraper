@@ -21,8 +21,12 @@ mass calculations.
 	- Task for next iteration: Add a function that update the basal metabloic rate by factoring in activity level of the user.
 	
 ### Gautami user story: 
+Iteration 1: 
 - Accomplished tasks: Created and wrote the bash script that runs along with the Java program created (NutritionDataScraper). Made a new branch in github that is able to run with the bash script. Managed the project management aspect by creating cards on the project and seeing what tasks have been accomplished and still need to be done. 
 - Tasks for the next iteration: Write JUnit tests to ensure all of our functionalities are working as planned. Having all of the nutrition info that we're scraping to printed out in a file to be opened by the bash script. 
+Iteration 2: 
+- Accomplished tasks: Implemented additional functionality by creating a new Java class to retrieve user inputs about height, weight, and gender and wrote methods to calculate the lean body mass and basal metabolic rate from the inputs to return back to users. These currently don't take in the activity level of the user. To improve from the last iteration, I cleaned up the files to ensure that only the necessary files were included in each of the branches and cleaned up the old methods by breaking them up and splitting into classes. 
+- Tasks for the next iteration: Add additional functionality around diet planning so that the user can receive a personalized diet plan with food and biometric inputs
 
 ### Constance user story 
 - Accomplished tasks (iteration 2): 1. Wrote JUnit tests for PersonalNutritionInfo. 2. Reformatted and applied clean code practices to PersonalNutritionInfo. 3. Cleaned up NutritionDataScraper class code 4. Upkept and majaged project tracking board.   
