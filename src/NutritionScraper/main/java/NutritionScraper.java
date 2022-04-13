@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.opentelemetry.exporter.logging.SystemOutLogExporter;
 
 import java.util.*;
 import java.io.File;
@@ -47,7 +46,7 @@ public class NutritionScraper {
 	 * all listed foods), and selects the extended nutrition facts 
 	 * 
 	 */
-	public void goToFoodPage(String url) {
+	public boolean goToFoodPage(String url) {
 		boolean success = false;
 		
 		//keep trying to get the nutrition data until no errors occur
@@ -79,6 +78,8 @@ public class NutritionScraper {
 				continue;
 			}
 		}
+		
+		return success;
 	}
 	
 	public List<String> getRawData() {
@@ -144,13 +145,13 @@ public class NutritionScraper {
 			for (Map<String, String> foodItem : nutrients) {
 				row.add(foodItem.get(key));
 			}
+			
 			foodItems.add(row);
 		}
 		
 		String table = textParsing.tableFormat(foodItems);
 		
 		return table;
-	
 	}
 
 	public static void main(String[] args) {
