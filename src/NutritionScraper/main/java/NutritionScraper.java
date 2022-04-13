@@ -117,14 +117,14 @@ public class NutritionScraper {
 		return rawScraperData;
 	}
 	
-	public Map<String, String> getNutritionData(String url){
+	public Map<String, String> getNutritionData(String url, String selectedNutrients){
 		goToFoodPage(url);
 		List<String> rawFoodData = getRawData();
-		Map<String, String> foodMap = textParsing.mapRawData(rawFoodData);
+		Map<String, String> foodMap = textParsing.mapRawData(rawFoodData, selectedNutrients);
 		return foodMap;	
 		}
 	
-	public List<List<String>> getAllFoodData(List<String> urls) {
+	public List<List<String>> getAllFoodData(List<String> urls, String selectedNutrients) {
 		
 		//create an empty list of maps to hold each food
 		List<Map<String, String>> nutrients = new ArrayList<>();
@@ -132,7 +132,7 @@ public class NutritionScraper {
 		Set<String> nutrientKeys = new HashSet<>();
 		//iterate through the urls
 		for (String url : urls) {
-			Map<String, String> foodItem = getNutritionData(url);
+			Map<String, String> foodItem = getNutritionData(url, selectedNutrients);
 			
 			nutrients.add(foodItem);
 			nutrientKeys = foodItem.keySet();
@@ -155,8 +155,15 @@ public class NutritionScraper {
 	public static void main(String[] args) {
 		NutritionScraper scraper = new NutritionScraper();
 		String filePath = args[0];
+		String selectedNutrients;
+		if (args.length == 1) {
+			selectedNutrients = "all";
+		}
+		else {
+			selectedNutrients = args[1];
+		}
 		List<String> urls = textParsing.getUrls(filePath);
-		List<List<String>> table = scraper.getAllFoodData(urls);
+		List<List<String>> table = scraper.getAllFoodData(urls, selectedNutrients);
 		scraper.quitDriver();
 		String stringTable = textParsing.tableFormat(table);
 		System.out.println(stringTable);
