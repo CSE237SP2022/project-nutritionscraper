@@ -35,10 +35,17 @@ public class WeightManagement {
 		overHowManyWeeks = newInput.nextInt();
 	}
 	
-	public int calculateTEF() {
+	public int calculateThermicEffectiveFood() {
 		PersonalNutritionInfo bmr = new PersonalNutritionInfo();
-		 int TEF = (int) (bmr.basalMetabolicRate() * .01);
-		 return TEF;
+		int TEF = (int) (bmr.basalMetabolicRate() * .01);
+		return TEF;
+	}
+	
+	public int calculateTotalDailyExpenditure(){
+		PersonalNutritionInfo bmr = new PersonalNutritionInfo();
+		int TEF = calculateThermicEffectiveFood();
+		int TDEE = bmr.basalMetabolicRate() + TEF + 500; //replace 500 with calories burned from activity level
+		return TDEE;
 	}
 	
 	public void setUp(){
