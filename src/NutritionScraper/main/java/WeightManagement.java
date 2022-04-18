@@ -6,6 +6,7 @@ public class WeightManagement {
 	
 	private String loseOrGainWeight;
 	private int overHowManyWeeks;
+	private int kgs;
 	
 	public String getGoals() {
 		return this.loseOrGainWeight;
@@ -15,16 +16,20 @@ public class WeightManagement {
 		return this.overHowManyWeeks;
 	}
 	
+	public int getKgs(){
+		return this.kgs;
+	}
+	
 	public void inputWeightGoals(Scanner newInput) {
 		System.out.println("Do you want to lose weight type 'l' or gain weight type 'g' or maintain weight"
 				+ " 'm'?");
 		String inputPlaceHolder = newInput.next();
 		if(inputPlaceHolder.equals("l")) {
-			loseOrGainWeight = "lose";
+			this.loseOrGainWeight = "lose";
 		} else if(inputPlaceHolder.equals("g")) {
-			loseOrGainWeight = "gain";
+			this.loseOrGainWeight = "gain";
 		} else if(inputPlaceHolder.equals("m")) {
-			loseOrGainWeight = "maintain";
+			this.loseOrGainWeight = "maintain";
 		}else {
 			System.out.print("INVALID CHOOSE AGAIN");
 		}	
@@ -32,7 +37,12 @@ public class WeightManagement {
 	
 	public void inputOverHowManyWeeks(Scanner newInput){
 		System.out.println("In how many weeks do you want to lose or gainweight or maintain weight?");
-		overHowManyWeeks = newInput.nextInt();
+		this.overHowManyWeeks = newInput.nextInt();
+	}
+	
+	public void inputKgs(Scanner newInput){
+		System.out.println("How many kgs do you want to lose or gain? (type 0 for maintain");
+		this.kgs = newInput.nextInt();
 	}
 	
 	public int calculateThermicEffectiveFood() {
@@ -48,10 +58,47 @@ public class WeightManagement {
 		return TDEE;
 	}
 	
+	public int calculateKgPerDay(){
+		int kgPerWeek = this.kgs / this.overHowManyWeeks;
+		return kgPerWeek / 7;
+	}
+	
+	public int calculateLoseWeight(){
+		int TDEE = calculateTotalDailyExpenditure();
+		int kgPerDay = calculateKgPerDay();
+		int calPerDay = TDEE - kgPerDay;
+		if(calPerDay > 0){
+			return calPerDay;
+		}
+		System.out.println("Choose a less ambitious goal");
+		return -1;
+	}
+	
+	public int calculateGainWeight(){
+		int TDEE = calculateTotalDailyExpenditure();
+		int kgPerDay = calculateKgPerDay();
+		int calPerDay = TDEE + kgPerDay;
+		return calPerDay;
+	}
+	
+	public int caloriesAfterWeightManagement(){
+		if(this.loseOrGainWeight.equals("lose")){
+			return calculateLoseWeight();
+		} else if(this.loseOrGainWeight.equals("gain")){
+			return calculateGainWeight();
+		}
+		
+		return calculateTotalDailyExpenditure();
+	}
+	
 	public void setUp(){
 		Scanner newInput = new Scanner(System.in);
 		inputWeightGoals(newInput);
 		inputOverHowManyWeeks(newInput);
+		inputKgs(newInput);
+		
+		System.out.print("Your caloric need for each day based on your goals is " 
+		+ caloriesAfterWeightManagement());
 	}
 	
 	public static void main(String[]args) {
