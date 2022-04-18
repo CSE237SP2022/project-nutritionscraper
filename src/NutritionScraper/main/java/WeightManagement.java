@@ -60,7 +60,8 @@ public class WeightManagement {
 	
 	public int calculateKgPerDay(){
 		int kgPerWeek = this.kgs / this.overHowManyWeeks;
-		return kgPerWeek / 7;
+		int kgPerDay = kgPerWeek / 7;
+		return 7700*kgPerDay;
 	}
 	
 	public int calculateLoseWeight(){
