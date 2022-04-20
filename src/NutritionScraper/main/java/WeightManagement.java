@@ -11,6 +11,7 @@ public class WeightManagement {
 	private int kgs = 0;
 	private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 	
+	
 	public boolean isNumeric(String strNum) {
 		if (strNum == null) {
 			return false;
@@ -39,6 +40,10 @@ public class WeightManagement {
 	
 	public void setHowManyWeeks(int weeks) {
 		this.overHowManyWeeks = weeks;
+	}
+	
+	public void setLoseOrGainWeight(String goal) {
+		this.loseOrGainWeight = goal;
 	}
 	
 
@@ -100,16 +105,13 @@ public class WeightManagement {
 		}
 	}
 	
-	public int calculateThermicEffectiveFood() {
-		PersonalNutritionInfo pni = new PersonalNutritionInfo();
-		System.out.println(pni.basalMetabolicRate());
+	public int calculateThermicEffectiveFood(PersonalNutritionInfo pni) { //done
 		int TEF = (int) (pni.basalMetabolicRate() * .01);
 		return TEF;
 	}
 	
-	public int calculateTotalDailyExpenditure(){
-		PersonalNutritionInfo pni = new PersonalNutritionInfo();
-		int TEF = calculateThermicEffectiveFood();
+	public int calculateTotalDailyExpenditure(PersonalNutritionInfo pni){ //done
+		int TEF = calculateThermicEffectiveFood(pni);
 		int TDEE = pni.basalMetabolicRate() + TEF + 500; //replace 500 with calories burned from activity level
 		return TDEE;
 	}
@@ -124,9 +126,10 @@ public class WeightManagement {
 		return (int) (7700*kgPerDay);
 	}
 	
-	public int calculateLoseWeight(){
-		int TDEE = calculateTotalDailyExpenditure();
+	public int calculateLoseWeight(PersonalNutritionInfo pni){ //done
+		int TDEE = calculateTotalDailyExpenditure(pni);
 		int kgPerDay = calculateKgPerDay();
+		System.out.println(TDEE + " " + kgPerDay);
 		int calPerDay = TDEE - kgPerDay;
 		if(calPerDay > 0){
 			return calPerDay;
@@ -135,38 +138,47 @@ public class WeightManagement {
 		return -1;
 	}
 	
-	public int calculateGainWeight(){
-		int TDEE = calculateTotalDailyExpenditure();
+	public int calculateGainWeight(PersonalNutritionInfo pni){
+		int TDEE = calculateTotalDailyExpenditure(pni);
 		int kgPerDay = calculateKgPerDay();
 		int calPerDay = TDEE + kgPerDay;
 		return calPerDay;
 	}
 	
-	public int caloriesAfterWeightManagement(){
+	public int caloriesAfterWeightManagement(PersonalNutritionInfo pni){
 		if(this.loseOrGainWeight.equals("lose")){
-			return calculateLoseWeight();
+			return calculateLoseWeight(pni);
 		} else if(this.loseOrGainWeight.equals("gain")){
-			return calculateGainWeight();
+			return calculateGainWeight(pni);
 		}
 		
-		return calculateTotalDailyExpenditure();
+		return calculateTotalDailyExpenditure(pni);
 	}
 	
-	public void setUp(){
+	public void setUp(PersonalNutritionInfo pni){
+		System.out.println("Our records say that your gender is " + pni.getGender() + "; your height is " + pni.getHeight() + "cm; your weight is " + pni.getWeight() + "kg.");
+		System.out.println("");
+		
+		setKgs(pni.getWeight());
+		
 		Scanner newInput = new Scanner(System.in);
 		inputWeightGoals(newInput);
 		inputOverHowManyWeeks(newInput);
 		inputKgs(newInput);
 		
 		System.out.print("Your caloric need for each day based on your goals is " 
-		+ caloriesAfterWeightManagement());
+		+ caloriesAfterWeightManagement(pni));
 	}
 	
 	public static void main(String[]args) {
 		WeightManagement weightManagement = new WeightManagement();
-		weightManagement.setUp();
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		weightManagement.setUp(pni);
 		
-		System.out.print("hello");
+		
 	}
 
 }

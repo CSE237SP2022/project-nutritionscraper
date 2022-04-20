@@ -87,11 +87,45 @@ class TestWeightManagement {
 	}
 	
 	@Test
-	void NormalcalculateThermicEffectiveFood() {
+	void NormalFemaleCalculateThermicEffectiveFood() {
 		WeightManagement wm = new WeightManagement();
-		assertEquals(0, wm.calculateThermicEffectiveFood());
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
 		
+		assertEquals(14, wm.calculateThermicEffectiveFood(pni));
+
 	}
+	
+	@Test
+	void InvalidCalculateThermicEffectiveFood() {
+		WeightManagement wm = new WeightManagement();
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+
+		assertEquals(3, wm.calculateThermicEffectiveFood(pni));
+
+	}
+	
+	@Test
+	void NormalCalculateTotalDailyExpenditure() {
+		WeightManagement wm = new WeightManagement();
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		
+		assertEquals(1955, wm.calculateTotalDailyExpenditure(pni));
+	}
+	
+	@Test
+	void InvalidCalculateTotalDailyExpenditure() {
+		WeightManagement wm = new WeightManagement();
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		
+		assertEquals(873, wm.calculateTotalDailyExpenditure(pni));
+	}
+	
 	
 	@Test 
 	void DoubleCalculateKgPerDay() {
@@ -123,5 +157,79 @@ class TestWeightManagement {
 		assertEquals(0, value);
 	}
 
+	@Test
+	void NormalCalculateLoseWeight() {
+		WeightManagement wm = new WeightManagement();
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		wm.setHowManyWeeks(40);
+		wm.setKgs(60);
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		assertEquals(855, wm.calculateLoseWeight(pni));
+	}
+	
+	@Test
+	void InvalidCalculateLoseWeight() {
+		WeightManagement wm = new WeightManagement();
+		wm.setHowManyWeeks(12);
+		wm.setKgs(60);
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		assertEquals(-1, wm.calculateLoseWeight(pni));
+	}
+	
+	@Test
+	void NormalCalculateGainWeight() {
+		WeightManagement wm = new WeightManagement();
+		wm.setHowManyWeeks(12);
+		wm.setKgs(60);
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		assertEquals(7455, wm.calculateGainWeight(pni));
+	}
+	
+	@Test 
+	void NormalLoseCaloriesAfterWeightManagement() {
+		WeightManagement wm = new WeightManagement();
+		wm.setHowManyWeeks(50);
+		wm.setKgs(60);
+		wm.setLoseOrGainWeight("lose");
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(100);
+		assertEquals(1075, wm.caloriesAfterWeightManagement(pni));
+	}
+	
+	@Test 
+	void NormalMaintainCaloriesAfterWeightManagement() {
+		WeightManagement wm = new WeightManagement();
+		wm.setHowManyWeeks(2);
+		wm.setKgs(60);
+		wm.setLoseOrGainWeight("maintain");
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		assertEquals(1955, wm.caloriesAfterWeightManagement(pni));
+	}
+	
+	@Test 
+	void NormalGainCaloriesAfterWeightManagement() {
+		WeightManagement wm = new WeightManagement();
+		wm.setHowManyWeeks(50);
+		wm.setKgs(60);
+		wm.setLoseOrGainWeight("gain");
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		pni.setGender("F");
+		pni.setHeight(175);
+		pni.setWeight(60);
+		assertEquals(3055, wm.caloriesAfterWeightManagement(pni));
+	}
 
 }
