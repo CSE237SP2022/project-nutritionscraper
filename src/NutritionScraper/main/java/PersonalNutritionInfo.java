@@ -146,6 +146,12 @@ public class PersonalNutritionInfo{
 		int bmr = (int) (370 + (21.6 * lbm));
 		return bmr;
 	}
+
+
+	public PersonalNutritionInfo() {
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		PersonalNutritionInfo personalNutritionInfo = new PersonalNutritionInfo();
