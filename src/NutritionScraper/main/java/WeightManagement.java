@@ -32,7 +32,18 @@ public class WeightManagement {
 		return this.kgs;
 	}
 	
-	public void inputWeightGoals(Scanner newInput) {
+	public void setKgs(int kg) {
+		this.kgs = kg;
+		
+	}
+	
+	public void setHowManyWeeks(int weeks) {
+		this.overHowManyWeeks = weeks;
+	}
+	
+
+	
+	public void inputWeightGoals(Scanner newInput) { //done
 		System.out.println("Do you want to lose weight type 'l' or gain weight type 'g' or maintain weight"
 				+ " 'm'?");
 		String inputPlaceHolder = newInput.next();
@@ -43,62 +54,72 @@ public class WeightManagement {
 		} else if(inputPlaceHolder.equals("m")) {
 			this.loseOrGainWeight = "maintain";
 		}else {
-			System.out.print("INVALID CHOOSE AGAIN");
+			this.loseOrGainWeight = "maintain";
+			System.out.print("Your input is invalid. Weight goals automatically set to maintain. ");
 		}	
 	}
 	
-	public void inputOverHowManyWeeks(Scanner newInput){
+	public void inputOverHowManyWeeks(Scanner newInput){ //done
 		System.out.println("In how many weeks do you want to lose or gainweight or maintain weight?");
 		String currentInput = newInput.next();
 		if(isNumeric(currentInput)) {
 			int numericInput = Integer.valueOf(currentInput);
 			if(numericInput>= 0) {
-				this.overHowManyWeeks = newInput.nextInt();
+				this.overHowManyWeeks = numericInput;
 			}else{
 				System.out.print("Your input is invalid expecting non negative value. "
 						+ "Setting Value to 0 (default)");
 				this.overHowManyWeeks = 0;
 			}
 		}
+		else {
 		System.out.print("Your input is invalid expecting an integer value. "
 				+ "Setting Value to 0 (default)");
 			this.overHowManyWeeks =0;
+		}
 	}
 	
-	public void inputKgs(Scanner newInput){
+	public void inputKgs(Scanner newInput){ //done
 		System.out.println("How many kgs do you want to lose or gain? (type 0 for maintain");
 		String currentInput = newInput.next();
 		if(isNumeric(currentInput)) {
 			int numericInput = Integer.valueOf(currentInput);
 			if(numericInput>= 0) {
-				this.kgs = newInput.nextInt();
+				this.kgs = numericInput;
 			}else{
 				System.out.print("Your input is invalid expecting non negative value. "
 						+ "Setting Value to 0 (default)");
 				this.kgs = 0;
 			}
 		}
+		else {
 		System.out.print("Your input is invalid expecting an integer value. "
 				+ "Setting Value to 0 (default)");
 			this.kgs =0;
-		this.kgs = newInput.nextInt();
+
+		}
 	}
 	
 	public int calculateThermicEffectiveFood() {
-		PersonalNutritionInfo bmr = new PersonalNutritionInfo();
-		int TEF = (int) (bmr.basalMetabolicRate() * .01);
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
+		System.out.println(pni.basalMetabolicRate());
+		int TEF = (int) (pni.basalMetabolicRate() * .01);
 		return TEF;
 	}
 	
 	public int calculateTotalDailyExpenditure(){
-		PersonalNutritionInfo bmr = new PersonalNutritionInfo();
+		PersonalNutritionInfo pni = new PersonalNutritionInfo();
 		int TEF = calculateThermicEffectiveFood();
-		int TDEE = bmr.basalMetabolicRate() + TEF + 500; //replace 500 with calories burned from activity level
+		int TDEE = pni.basalMetabolicRate() + TEF + 500; //replace 500 with calories burned from activity level
 		return TDEE;
 	}
 	
-	public int calculateKgPerDay(){
-		int kgPerWeek = this.kgs / this.overHowManyWeeks;
+	public int calculateKgPerDay(){ //done
+		if (this.overHowManyWeeks == 0){
+			System.out.println("Denominator whose value is 0 gives 0 as final result. OverHowManyWeeks is zero.");
+			return 0;
+		}
+		double kgPerWeek = this.kgs / this.overHowManyWeeks;
 		double kgPerDay = kgPerWeek / 7;
 		return (int) (7700*kgPerDay);
 	}
