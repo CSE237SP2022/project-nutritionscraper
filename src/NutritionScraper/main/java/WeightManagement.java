@@ -1,12 +1,24 @@
 package NutritionScraper.main.java;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
+
 
 public class WeightManagement {
 	
-	private String loseOrGainWeight;
-	private int overHowManyWeeks;
-	private int kgs;
+	private String loseOrGainWeight= " ";
+	private int overHowManyWeeks = 0;
+	private int kgs = 0;
+	private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+	
+	public boolean isNumeric(String strNum) {
+		if (strNum == null) {
+			return false;
+		}
+		
+		return pattern.matcher(strNum).matches();
+	}
+	
 	
 	public String getGoals() {
 		return this.loseOrGainWeight;
@@ -37,11 +49,38 @@ public class WeightManagement {
 	
 	public void inputOverHowManyWeeks(Scanner newInput){
 		System.out.println("In how many weeks do you want to lose or gainweight or maintain weight?");
-		this.overHowManyWeeks = newInput.nextInt();
+		String currentInput = newInput.next();
+		if(isNumeric(currentInput)) {
+			int numericInput = Integer.valueOf(currentInput);
+			if(numericInput>= 0) {
+				this.overHowManyWeeks = newInput.nextInt();
+			}else{
+				System.out.print("Your input is invalid expecting non negative value. "
+						+ "Setting Value to 0 (default)");
+				this.overHowManyWeeks = 0;
+			}
+		}
+		System.out.print("Your input is invalid expecting an integer value. "
+				+ "Setting Value to 0 (default)");
+			this.overHowManyWeeks =0;
 	}
 	
 	public void inputKgs(Scanner newInput){
 		System.out.println("How many kgs do you want to lose or gain? (type 0 for maintain");
+		String currentInput = newInput.next();
+		if(isNumeric(currentInput)) {
+			int numericInput = Integer.valueOf(currentInput);
+			if(numericInput>= 0) {
+				this.kgs = newInput.nextInt();
+			}else{
+				System.out.print("Your input is invalid expecting non negative value. "
+						+ "Setting Value to 0 (default)");
+				this.kgs = 0;
+			}
+		}
+		System.out.print("Your input is invalid expecting an integer value. "
+				+ "Setting Value to 0 (default)");
+			this.kgs =0;
 		this.kgs = newInput.nextInt();
 	}
 	
@@ -105,6 +144,9 @@ public class WeightManagement {
 	public static void main(String[]args) {
 		WeightManagement weightManagement = new WeightManagement();
 		weightManagement.setUp();
+		
+		System.out.print("hello");
 	}
 
 }
+
