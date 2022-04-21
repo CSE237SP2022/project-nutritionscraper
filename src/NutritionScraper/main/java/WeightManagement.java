@@ -48,7 +48,7 @@ public class WeightManagement {
 	
 
 	
-	public void inputWeightGoals(Scanner newInput) { //done
+	public void inputWeightGoals(Scanner newInput) { 
 		System.out.println("Do you want to lose weight type 'l' or gain weight type 'g' or maintain weight"
 				+ " 'm'?");
 		String inputPlaceHolder = newInput.next();
@@ -64,7 +64,7 @@ public class WeightManagement {
 		}	
 	}
 	
-	public void inputOverHowManyWeeks(Scanner newInput){ //done
+	public void inputOverHowManyWeeks(Scanner newInput){ 
 		System.out.println("In how many weeks do you want to lose or gainweight or maintain weight?");
 		String currentInput = newInput.next();
 		if(isNumeric(currentInput)) {
@@ -84,7 +84,7 @@ public class WeightManagement {
 		}
 	}
 	
-	public void inputKgs(Scanner newInput){ //done
+	public void inputKgs(Scanner newInput){ 
 		System.out.println("How many kgs do you want to lose or gain? (type 0 for maintain");
 		String currentInput = newInput.next();
 		if(isNumeric(currentInput)) {
@@ -105,12 +105,12 @@ public class WeightManagement {
 		}
 	}
 	
-	public int calculateThermicEffectiveFood(PersonalNutritionInfo pni) { //done
+	public int calculateThermicEffectiveFood(PersonalNutritionInfo pni) { 
 		int TEF = (int) (pni.basalMetabolicRate() * .01);
 		return TEF;
 	}
 	
-	public int calculateTotalDailyExpenditure(PersonalNutritionInfo pni){ //done
+	public int calculateTotalDailyExpenditure(PersonalNutritionInfo pni){ 
 		int TEF = calculateThermicEffectiveFood(pni);
 		int TDEE = pni.basalMetabolicRate() + TEF + 500; //replace 500 with calories burned from activity level
 		return TDEE;
@@ -126,7 +126,7 @@ public class WeightManagement {
 		return (int) (7700*kgPerDay);
 	}
 	
-	public int calculateLoseWeight(PersonalNutritionInfo pni){ //done
+	public int calculateLoseWeight(PersonalNutritionInfo pni){ 
 		int TDEE = calculateTotalDailyExpenditure(pni);
 		int kgPerDay = calculateKgPerDay();
 		System.out.println(TDEE + " " + kgPerDay);
