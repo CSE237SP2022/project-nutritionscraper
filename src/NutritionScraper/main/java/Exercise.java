@@ -47,17 +47,17 @@ public class Exercise {
 		System.out.println("Type in the number of minutes that you exercised for.");
 		String currentInput = input.next(); 
 		if(isNumeric(currentInput)) {
-			int numericInput = Integer.valueOf(currentInput);
+			int numericInput = (int) Math.round(Double.valueOf(currentInput));
 			if(numericInput>= 0) {
-				this.duration = input.nextInt();
+				this.duration = numericInput;
 			}else{
-				System.out.print("Your input is invalid expecting non negative integer value. "
+				System.out.println("Your input is invalid expecting non negative integer value. "
 						+ "Setting Value to 0 (default)");
 				this.duration = 0;
 			}
 		}
 		else{
-			System.out.print("Your input is invalid expecting an integer value. "
+			System.out.println("Your input is invalid expecting an integer value. "
 					+ "Setting Value to 0 (default)");
 				this.duration =0;
 		}
@@ -67,17 +67,17 @@ public class Exercise {
 		System.out.println("How intense was your activity? Type in '3' if you did a light-intensity activity. Type in '5' for a moderate-intensity activity. Type in '7' for a vigorous-intensity activity.");
 		String currentInput = input.next(); 
 		if(isNumeric(currentInput)) {
-			int numericInput = Integer.valueOf(currentInput);
-			if(numericInput>= 0) {
-				this.met = input.nextInt();
+			int numericInput = (int) Math.round(Double.valueOf(currentInput));
+			if(numericInput==3 || numericInput==5 || numericInput==7 ) {
+				this.met = numericInput;
 			}else{
-				System.out.print("Your input is invalid expecting non negative integer value: 3, 6, or 9 "
+				System.out.println("Your input is invalid. EXpecting non negative integer value: 3, 5, or 9 "
 						+ "Setting Value to 0 (default)");
 				this.met = 0;
 			}
 		}
 		else{
-			System.out.print("Your input is invalid expecting an integer value. "
+			System.out.println("Your input is invalid. Expecting an integer value. "
 					+ "Setting Value to 0 (default)");
 				this.met =0;
 		}
@@ -87,17 +87,17 @@ public class Exercise {
 		System.out.println("What is your weight in kgs?"); 
 		String currentInput = input.next(); 
 		if(isNumeric(currentInput)) {
-			int numericInput = Integer.valueOf(currentInput);
+			int numericInput = (int) Math.round(Double.valueOf(currentInput));
 			if(numericInput>= 0) {
-				this.weightKgs = input.nextInt();
+				this.weightKgs = numericInput;
 			}else{
-				System.out.print("Your input is invalid expecting non negative integer value. "
+				System.out.println("Your input is invalid. Expecting non negative integer value. "
 						+ "Setting Value to 0 (default)");
 				this.weightKgs = 0;
 			}
 		}
 		else{
-			System.out.print("Your input is invalid expecting an integer value. "
+			System.out.println("Your input is invalid. Expecting an integer value. "
 					+ "Setting Value to 0 (default)");
 				this.weightKgs =0;
 		}
@@ -105,7 +105,8 @@ public class Exercise {
 	}
 	
 	public double calculateCaloriesBurned() {
-		double caloriesBurned = duration * ((met * 3.5 * weightKgs)/200); 
+		double caloriesBurned = duration * ((met * 3.5 * weightKgs)/200.0); 
+		caloriesBurned = Math.round(caloriesBurned * 100.0)/100.0;
 		return caloriesBurned; 
 	}
 	
