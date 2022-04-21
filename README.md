@@ -31,6 +31,11 @@ Iteration 2:
 - Tasks for the next iteration: Add additional functionality around diet planning so that the user can receive a personalized diet plan with food and biometric inputs
 
 ### Constance user story 
+Iteration 1:
+- Accomplished tasks: 1. Cleaned up the NutritionDataScraper output table, allowing it to exclude key value pairs exceptions in the scraping process. 2. Created and managed project tracking board, for project management and task assignment.   
+- Tasks for next time: Write 1. JUnit tests for different functionalities, catching server errors and exceptions. 2. clean up NutritionDataScraper class code, following clean code principles. 
+
+Iteration 2:
 - Accomplished tasks (iteration 2): 1. Wrote JUnit tests for PersonalNutritionInfo. 2. Reformatted and applied clean code practices to PersonalNutritionInfo. 3. Cleaned up NutritionDataScraper class code 4. Upkept and majaged project tracking board.   
 - Tasks for next time: 1. Explore how LBM(lean body mass) and BMR(basal metabolic rate) can add value to the foodItems in our input.txt file.
 
