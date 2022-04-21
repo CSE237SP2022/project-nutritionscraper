@@ -1,6 +1,7 @@
 package NutritionScraper.main.java;
 
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -47,66 +48,80 @@ public class PersonalNutritionInfo{
 	}
 	
 	public void inputWeight(Scanner apScanner) {
-		while (true) {
-		    System.out.println("What is your weight (in kg)?");
-		    String s = apScanner.next();
-		    if (isNumeric(s)) {
-		    	int weight = (int)Double.parseDouble(s);
-		    	if ((weight < 200) && (weight>0)) {
-		    		this.weight = weight;
-		    		System.out.println("Your weight is " + this.weight + "kg");
-		    		break;
-		    	}
-		    	System.out.println("ERROR Please enter a valid weight");
-		    }
-		   else {
-		        System.out.println("ERROR Please enter a valid weight");
-		   }    
-		}
+
+	    System.out.println("What is your weight (in kg)?");
+	    String s = apScanner.next();
+	    if (isNumeric(s)) {
+	    	int weight = (int)Double.parseDouble(s);
+	    	if ((weight < 200) && (weight>0)) {
+	    		this.weight = weight;
+	    		System.out.println("Your weight is " + this.weight + "kg");
+
+	    	}
+	    	else {
+		    	this.weight = 0;
+		    	System.out.println("Your input is invalid. Expecting non negative integer value. "
+						+ "Setting Value to 0 (default)");
+	    	}
+	    }
+	   else {
+		   this.weight = 0;
+	       System.out.println("Your input is invalid. Expecting an integer value. "
+					+ "Setting Value to 0 (default)");
+	   }    
+	
 	}
 	
 	public void inputHeight(Scanner apScanner) {
-		while (true) {
-		    System.out.println("What is your height (in cm)?");
-		    String s = apScanner.next();
-		    if (isNumeric(s)) {
-		    	int height = (int)Double.parseDouble(s);
-		    	if ((height < 220) && (height>56)) {
-		    		this.height = height;
-		    		 System.out.println("Your height is " + this.height + "cm");
-		    		break;
-		    	}
-		    	System.out.println("Error: invalid input. Please enter a valid height \n");
-		    }
-		   else {
-			   System.out.println("Error: invalid input. Please enter a valid height \n");
-		   }    
-		}
+
+	    System.out.println("What is your height (in cm)?");
+	    String s = apScanner.next();
+	    if (isNumeric(s)) {
+	    	int height = (int)Double.parseDouble(s);
+	    	if ((height < 220) && (height>56)) {
+	    		this.height = height;
+	    		 System.out.println("Your height is " + this.height + "cm");
+	  
+	    	}
+	    	else {
+		    	this.height = 0;
+		    	System.out.println("Your input is invalid. Setting Value to 0 (default)");
+	    	}
+	    }
+	   else {
+		   this.height = 0;
+		   System.out.println("Your input is invalid. Expecting an integer value. "
+					+ "Setting Value to 0 (default)");
+	   }    
+	
 	}
 	
 	public void inputGender(Scanner apScanner) {
-		while (true) {
-		    System.out.println("What is your gender? Enter M for male or F for female");
-		    String s = apScanner.next();
-		
-		    if (s.equals("M")|| s.equals("F") || s.equals("m") || s.equals("f")) {
-		    	if (s.equals("m")) {
-		    		this.gender = "M";
-		    	}
-		    	else if (s.equals("f")) {
-		    		this.gender = "F";
-		    	}
-		    	else {
-		    		this.gender = s;
-		    	}
-				System.out.println("Your gender is " + this.gender);
-				break;
-		    }
-		    else {
-		    	System.out.println("Error: invalid input. Please enter a valid gender.");
-		    }
+
+	    System.out.println("What is your gender? Enter M for male or F for female");
+	    String s = apScanner.next();
+	
+	    if (s.equals("M")|| s.equals("F") || s.equals("m") || s.equals("f")) {
+	    	if (s.equals("m")) {
+	    		this.gender = "M";
+	    	}
+	    	else if (s.equals("f")) {
+	    		this.gender = "F";
+	    	}
+	    	else {
+	    		this.gender = s;
+	    	}
+			System.out.println("Your gender is " + this.gender);
+	    }
+	    else {
+	    	String[] possibleGenders = {"F", "M"};
+	    	Random ran = new Random();
+	    	String random_gender = possibleGenders[ran.nextInt(possibleGenders.length)];
+	    	this.gender = random_gender;
+	    	System.out.println("Your input is invalid. Your randomly generated gender is " + this.gender);
+	    }
 		      
-		}
+
 	}
 	public void setUp(){
 		Scanner apScanner = new Scanner(System.in);
