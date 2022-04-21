@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class Exercise {
 	
+
 	private int duration=0;  
 	private int met=0; 
 	private int weightKgs=0; 
@@ -25,7 +26,7 @@ public class Exercise {
 	public int getMet() {
 		return this.met; 
 	}
-	
+
 	public int getWeightKgs() {
 		return this.weightKgs; 
 	}
@@ -43,13 +44,16 @@ public class Exercise {
 				this.duration = 0;
 			}
 		}
+    else{
 		System.out.print("Your input is invalid expecting an integer value. "
 				+ "Setting Value to 0 (default)");
 			this.duration =0;
+    }
 	}
 	
 	public void inputMetbolicEquivalentForTaskInfo (Scanner input) {
 		System.out.println("How intense was your activity? Type in '3' if you did a light-intensity activity. Type in '5' for a moderate-intensity activity. Type in '7' for a vigorous-intensity activity.");
+
 		String currentInput = input.next(); 
 		if(isNumeric(currentInput)) {
 			int numericInput = Integer.valueOf(currentInput);
@@ -61,9 +65,11 @@ public class Exercise {
 				this.met = 0;
 			}
 		}
+    else{
 		System.out.print("Your input is invalid expecting an integer value. "
 				+ "Setting Value to 0 (default)");
 			this.met =0;
+    }
 	}
 	
 	public void inputWeightInfo (Scanner input) {
@@ -79,9 +85,12 @@ public class Exercise {
 				this.weightKgs = 0;
 			}
 		}
+    else{
 		System.out.print("Your input is invalid expecting an integer value. "
 				+ "Setting Value to 0 (default)");
 			this.weightKgs =0;
+    }
+
 	}
 	
 	public double calculateCaloriesBurned() {
@@ -96,10 +105,6 @@ public class Exercise {
 		inputWeightInfo (input); 
 		
 		System.out.println("The amount of calories you burned in your workout is " + calculateCaloriesBurned()); 
-	}
-	
-	public Exercise() {
-		
 	}
 	
 	public static void main (String[]args) {

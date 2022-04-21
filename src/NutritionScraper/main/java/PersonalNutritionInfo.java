@@ -1,5 +1,6 @@
 package NutritionScraper.main.java;
 
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -140,11 +141,22 @@ public class PersonalNutritionInfo{
 		return 0.00;
 	}
 	
+	public int basalMetabolicRate(){
+		double lbm = leanBodyMass();
+		int bmr = (int) (370 + (21.6 * lbm));
+		return bmr;
+	}
+
+
+	public PersonalNutritionInfo() {
+		
+	}
 	
 	
 	public static void main(String[] args) {
 		PersonalNutritionInfo personalNutritionInfo = new PersonalNutritionInfo();
 		personalNutritionInfo.setUp();
 	}
+
 
 }
