@@ -31,6 +31,18 @@ public class Exercise {
 		return this.weightKgs; 
 	}
 	
+	public void setMet(int met) {
+		this.met = met;
+	}
+	
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	
+	public void setWeight(int weight) {
+		this.weightKgs = weight;
+	}
+	
 	public void inputExerciseDurationInfo (Scanner input) {
 		System.out.println("Type in the number of minutes that you exercised for.");
 		String currentInput = input.next(); 
@@ -44,16 +56,15 @@ public class Exercise {
 				this.duration = 0;
 			}
 		}
-    else{
-		System.out.print("Your input is invalid expecting an integer value. "
-				+ "Setting Value to 0 (default)");
-			this.duration =0;
-    }
+		else{
+			System.out.print("Your input is invalid expecting an integer value. "
+					+ "Setting Value to 0 (default)");
+				this.duration =0;
+		}
 	}
 	
 	public void inputMetbolicEquivalentForTaskInfo (Scanner input) {
 		System.out.println("How intense was your activity? Type in '3' if you did a light-intensity activity. Type in '5' for a moderate-intensity activity. Type in '7' for a vigorous-intensity activity.");
-
 		String currentInput = input.next(); 
 		if(isNumeric(currentInput)) {
 			int numericInput = Integer.valueOf(currentInput);
@@ -65,11 +76,11 @@ public class Exercise {
 				this.met = 0;
 			}
 		}
-    else{
-		System.out.print("Your input is invalid expecting an integer value. "
-				+ "Setting Value to 0 (default)");
-			this.met =0;
-    }
+		else{
+			System.out.print("Your input is invalid expecting an integer value. "
+					+ "Setting Value to 0 (default)");
+				this.met =0;
+		}
 	}
 	
 	public void inputWeightInfo (Scanner input) {
@@ -85,11 +96,11 @@ public class Exercise {
 				this.weightKgs = 0;
 			}
 		}
-    else{
-		System.out.print("Your input is invalid expecting an integer value. "
-				+ "Setting Value to 0 (default)");
-			this.weightKgs =0;
-    }
+		else{
+			System.out.print("Your input is invalid expecting an integer value. "
+					+ "Setting Value to 0 (default)");
+				this.weightKgs =0;
+		}
 
 	}
 	
