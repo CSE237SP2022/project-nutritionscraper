@@ -15,28 +15,10 @@ import NutritionScraper.main.java.PersonalNutritionInfo;
 
 
 public class TestPersonalNutritionInfo {
-	
-	public PersonalNutritionInfo PNI = new PersonalNutritionInfo();
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-	private final PrintStream originalOut = System.out;
-	private final PrintStream originalErr = System.err;
-
-	
-	@Before
-	public void setUpStreams() {
-	    System.setOut(new PrintStream(outContent));
-	    System.setErr(new PrintStream(errContent));
-	}
-
-	@After
-	public void restoreStreams() {
-	    System.setOut(originalOut);
-	    System.setErr(originalErr);
-	}
-	
+			
 	@Test
 	void validNumeric() {
+		PersonalNutritionInfo PNI = new PersonalNutritionInfo();
 		String s = "1234";
 		boolean isNumeric = PNI.isNumeric(s);
 		assertTrue(isNumeric);
@@ -44,6 +26,7 @@ public class TestPersonalNutritionInfo {
 	
 	@Test
 	void validNumeric2() {
+		PersonalNutritionInfo PNI = new PersonalNutritionInfo();
 		String s = "12.34";
 		boolean isNumeric = PNI.isNumeric(s);
 		assertTrue(isNumeric);
@@ -51,6 +34,7 @@ public class TestPersonalNutritionInfo {
 	
 	@Test
 	void invalidNumeric() {
+		PersonalNutritionInfo PNI = new PersonalNutritionInfo();
 		String s = "al;sdkj";
 		boolean isNumeric = PNI.isNumeric(s);
 		assertFalse(isNumeric);
@@ -58,13 +42,14 @@ public class TestPersonalNutritionInfo {
 	
 	@Test
 	void invalidNumeric2() {
+		PersonalNutritionInfo PNI = new PersonalNutritionInfo();
 		String s = "123k";
 		boolean isNumeric = PNI.isNumeric(s);
 		assertFalse(isNumeric);
 	}
 	
 	@Test
-	void getWeightTest() {
+	void NormalGetWeightTest() {
 		String testInput = "\n23\n";
 		Scanner testScanner = new Scanner(testInput);
 		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
@@ -73,13 +58,26 @@ public class TestPersonalNutritionInfo {
 	}
 	
 	@Test
-	public void err() {
-	    System.err.print("hello again");
-	    assertEquals("hello again", errContent.toString());
+	void NegativeGetWeightTest() {
+		String testInput = "\n-23\n";
+		Scanner testScanner = new Scanner(testInput);
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.inputWeight(testScanner);
+		assertEquals(0, testPersonalNutrition.getWeight());
 	}
 	
 	@Test
-	void getHeightTest() {
+	void InvalidGetWeightTest() {
+		String testInput = "\nWeight\n";
+		Scanner testScanner = new Scanner(testInput);
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.inputWeight(testScanner);
+		assertEquals(0, testPersonalNutrition.getWeight());
+	}
+	
+	
+	@Test
+	void NormalGetHeightTest() {
 		String testInput = "\n167\n";
 		Scanner testScanner = new Scanner(testInput);
 		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
@@ -88,12 +86,51 @@ public class TestPersonalNutritionInfo {
 	}
 	
 	@Test
-	void getGenderTest() {
+	void NegativeGetHeightTest() {
+		String testInput = "\n-167\n";
+		Scanner testScanner = new Scanner(testInput);
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.inputHeight(testScanner);
+		assertEquals(0, testPersonalNutrition.getHeight());
+	}
+	
+	@Test
+	void InvalidGetHeightTest() {
+		String testInput = "\nHeight\n";
+		Scanner testScanner = new Scanner(testInput);
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.inputHeight(testScanner);
+		assertEquals(0, testPersonalNutrition.getHeight());
+	}
+	
+	@Test
+	void FemaleGetGenderTest() {
 		String testInput = "\nF\n";
 		Scanner testScanner = new Scanner(testInput);
 		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
 		testPersonalNutrition.inputGender(testScanner);
 		assertEquals("F", testPersonalNutrition.getGender());
+	}
+	
+	@Test
+	void MaleGetGenderTest() {
+		String testInput = "\nm\n";
+		Scanner testScanner = new Scanner(testInput);
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.inputGender(testScanner);
+		assertEquals("M", testPersonalNutrition.getGender());
+	}
+	
+	@Test
+	void InvalidRandomGetGenderTest() {
+		String testInput = "\nasdf\n";
+		Scanner testScanner = new Scanner(testInput);
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.inputGender(testScanner);
+		assertNotNull(testPersonalNutrition.getGender());
+		String currGender = testPersonalNutrition.getGender();
+		assertTrue((currGender == "M") || (currGender == "F"));
+		
 	}
 
 	@Test
