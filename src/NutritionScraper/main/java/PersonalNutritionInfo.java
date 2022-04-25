@@ -4,6 +4,7 @@ package NutritionScraper.main.java;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.lang.Math;
 
 public class PersonalNutritionInfo{
 	
@@ -166,6 +167,33 @@ public class PersonalNutritionInfo{
 	public PersonalNutritionInfo() {
 		
 	}
+	
+	public double calculateBMI() {
+		double bmi = (double) this.height/Math.pow(this.weight,2);
+		if (bmi < 18.5) {
+			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as underweight");
+		}
+		else if (bmi >= 18.5 & bmi <=24.9) {
+			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as healthy");
+		}
+		else if (bmi >= 25.0 & bmi <=29.9) {
+			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as overweight");
+		}
+		else {
+			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as obese");
+		}
+		return bmi;
+	}
+	
+	public double[] calculateIBW() {
+		double[] ibwRange = new double[2];
+		double lowerRange = Math.sqrt(18.5/this.height);
+		double upperRange = Math.sqrt(24.9/this.height);
+		ibwRange[0] = lowerRange;
+		ibwRange[1] = upperRange;
+		return ibwRange;
+	}
+	
 	
 	
 	public static void main(String[] args) {
