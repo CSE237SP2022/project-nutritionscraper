@@ -66,42 +66,37 @@ public class WeightManagement {
 	
 	public void inputOverHowManyWeeks(Scanner newInput){ 
 		System.out.println("In how many weeks do you want to lose or gainweight or maintain weight?");
-		String currentInput = newInput.next();
-		if(isNumeric(currentInput)) {
-			int numericInput = Integer.valueOf(currentInput);
-			if(numericInput>= 0) {
-				this.overHowManyWeeks = numericInput;
-			}else{
-				System.out.print("Your input is invalid expecting non negative value. "
-						+ "Setting Value to 0 (default)");
-				this.overHowManyWeeks = 0;
-			}
-		}
-		else {
-		System.out.print("Your input is invalid expecting an integer value. "
-				+ "Setting Value to 0 (default)");
-			this.overHowManyWeeks =0;
-		}
+		this.overHowManyWeeks = isNonNegative(newInput);
 	}
+
+
 	
 	public void inputKgs(Scanner newInput){ 
 		System.out.println("How many kgs do you want to lose or gain? (type 0 for maintain");
+		this.kgs = isNonNegative(newInput);
+	}
+	
+	private int isNonNegative(Scanner newInput) {
 		String currentInput = newInput.next();
 		if(isNumeric(currentInput)) {
 			int numericInput = Integer.valueOf(currentInput);
-			if(numericInput>= 0) {
-				this.kgs = numericInput;
-			}else{
-				System.out.print("Your input is invalid expecting non negative value. "
-						+ "Setting Value to 0 (default)");
-				this.kgs = 0;
-			}
+			return isValueBelowZero(numericInput);
 		}
 		else {
 		System.out.print("Your input is invalid expecting an integer value. "
 				+ "Setting Value to 0 (default)");
-			this.kgs =0;
+			return 0;
+		}
+	}
 
+
+	private int isValueBelowZero(int numericInput) {
+		if(numericInput>= 0) {
+			return numericInput;
+		}else{
+			System.out.print("Your input is invalid expecting non negative value. "
+					+ "Setting Value to 0 (default)");
+			return 0;
 		}
 	}
 	
@@ -112,11 +107,11 @@ public class WeightManagement {
 	
 	public int calculateTotalDailyExpenditure(PersonalNutritionInfo pni){ 
 		int TEF = calculateThermicEffectiveFood(pni);
-		int TDEE = pni.basalMetabolicRate() + TEF + 500; //replace 500 with calories burned from activity level
+		int TDEE = pni.basalMetabolicRate() + TEF + 500; 
 		return TDEE;
 	}
 	
-	public int calculateKgPerDay(){ //done
+	public int calculateKgPerDay(){ 
 		if (this.overHowManyWeeks == 0){
 			System.out.println("Denominator whose value is 0 gives 0 as final result. OverHowManyWeeks is zero.");
 			return 0;
@@ -182,4 +177,3 @@ public class WeightManagement {
 	}
 
 }
-
