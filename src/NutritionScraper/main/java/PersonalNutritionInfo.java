@@ -4,6 +4,7 @@ package NutritionScraper.main.java;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.lang.Math;
 
 public class PersonalNutritionInfo{
 	
@@ -166,6 +167,16 @@ public class PersonalNutritionInfo{
 	public PersonalNutritionInfo() {
 		
 	}
+	
+	public double[] calculateIBW() {
+		double[] ibwRange = new double[2];
+		double lowerRange = Math.sqrt(18.5/this.height);
+		double upperRange = Math.sqrt(24.9/this.height);
+		ibwRange[0] = lowerRange;
+		ibwRange[1] = upperRange;
+		return ibwRange;
+	}
+	
 	
 	
 	public static void main(String[] args) {
