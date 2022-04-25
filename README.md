@@ -1,4 +1,7 @@
 # project-nutritionscraper
+### Functionality of project 
+- PersonalNutrition Info.java takes in a users height, weight, and gender and outputs your lean body mass. The Excerise.java class calculates how many caliries you would burn given your weight, activity level, and duration of activity. The WeightManagement.java takes in a persons basal metablic rate and how much weight they want to lose over a given period time and outputs how many calories you need to each everyday. 
+
 ### Daniel user story
 -  Iteration 1:
 	- Accomplished tasks: Wrote the main web scraping functionality for the NutritionDataScraper class. This includes making the class set up a webdriver instance so that pages can be scraped upon object creation, the ability to read URL's from a text file, and outputting cleanly formatted nutrition data to the console.
@@ -16,10 +19,12 @@
 	- Created a new branch in github from the command line to house this bash script while it is still in progress. 
 	- Tasks for the next iteration: Get the nurtition info currently printing out in consol to print into a text file that then is opened and acessed by the bash script. Help with JUnit testing for new functionalities. 
 - Iteration 2: 
-	- Accomplished tasks: Cretaed new class for personal nutrition info that asks for user input abou their height, weight, and gender. Created a 	
+	- Accomplished tasks: Cretaed new class for personal nutrition info that asks for user input about their height, weight, and gender. Created a 	
 method to calucalte the lean body mass using the input of the users. Created a method to calculate the basal metabolic rate, using the lean body 
 mass calculations. 
 	- Task for next iteration: Add a function that update the basal metabloic rate by factoring in activity level of the user.
+- Iteration 3: 
+	- Accomplished Tasks: Created WeightManagement class and the methods to calculate how many calories needed to lose or gain weight or maintain weight over a given period of time and all helper methods needed for sucessful calculations. 
 	
 ### Gautami user story: 
 Iteration 1: 
@@ -41,14 +46,12 @@ Iteration 2:
 
 
 
-### How to compile the code
-- Download maven. This can be done by executing the command brew install maven
-- navigate to the project project directory (/project-nutritionscraper)
-- execute the command "mvn clean compile assembly:single"
+### How to compile and run the code
+- cd into project-nutritionscraper
+- if you want to compile and run PersonalNutritionInfo.java run ./runpersonal.sh
+- if you want to compile and run Excerise.java run ./runexercise.sh
+- if you want to compile and run WeightManagement.java run ./run.sh
 
 
-### How to run the program
-- First open the foodList.txt file located at /project-nutritionscraper. This file contains a list of foods from https://nutritiondata.self.com/. Add any desired foods into by entering the URL of the food on a new line. Save and close the file when done.
-- Execute the bash script with the filepath of the foodList.txt file as the first argument (e.g. bash nutritionscript.sh foodList.txt ). If the program keeps outputting "Failed to get nutrition data. Trying again.", try exiting the program and re-running it. This error occurs due to pop-up ads on the website.
-	- to list all nutrition info: bash nutritionscript.sh all
-	- to list specific nutrition info: bash nutritionscript.sh "<nutrient1, nutrient2...>"
+
+
