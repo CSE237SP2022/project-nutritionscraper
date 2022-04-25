@@ -191,6 +191,22 @@ public class PersonalNutritionInfo{
 		double upperRange = Math.sqrt(24.9/this.height);
 		ibwRange[0] = lowerRange;
 		ibwRange[1] = upperRange;
+		System.out.println("The healthy weight range for your body type is between " + String.valueOf(lowerRange) + " kgs and " + String.valueOf(upperRange) + " kgs");
+		double weightPercent;
+		if (this.weight > upperRange) {
+			weightPercent = 100*(this.weight/upperRange);
+			System.out.println("Your body weight is " + String.valueOf(weightPercent) + "% over the upper limit of the healthy range");
+		}
+		if (this.weight < lowerRange) {
+			weightPercent = 100*(this.weight/lowerRange);
+			System.out.println("Your body weight is " + String.valueOf(weightPercent) + "% under the lower limit of the healthy range");
+		}
+		else {
+			weightPercent = 0;
+			System.out.println("You are within the healthy body weight range");
+		}
+		System.out.println("The healthy weight range for your body type is between " + String.valueOf(lowerRange) + " kgs and " + String.valueOf(upperRange) + " kgs");
+
 		return ibwRange;
 	}
 	
