@@ -173,7 +173,7 @@ public class PersonalNutritionInfo{
 	}
 	
 	public double calculateBMI() {
-		double bmi = (double) this.height/Math.pow(this.weight,2);
+		double bmi = (double)(this.weight/Math.pow((double)this.height/100,2));
 		if (bmi < 18.5) {
 			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as underweight");
 		}
@@ -191,26 +191,23 @@ public class PersonalNutritionInfo{
 	
 	public double[] calculateIBW() {
 		double[] ibwRange = new double[2];
-		double lowerRange = Math.sqrt(18.5/this.height);
-		double upperRange = Math.sqrt(24.9/this.height);
+		double lowerRange = 18.5*Math.pow((double)this.height/100,2);
+		double upperRange = 24.9*Math.pow((double)this.height/100,2);
 		ibwRange[0] = lowerRange;
 		ibwRange[1] = upperRange;
-		System.out.println("The healthy weight range for your body type is between " + String.valueOf(lowerRange) + " kgs and " + String.valueOf(upperRange) + " kgs");
+		System.out.print("The healthy weight range for your body type is between " + String.valueOf((int)lowerRange) + " kgs and " + String.valueOf((int)upperRange) + " kgs. ");
 		double weightPercent;
 		if (this.weight > upperRange) {
 			weightPercent = 100*(this.weight/upperRange);
-			System.out.println("Your body weight is " + String.valueOf(weightPercent) + "% over the upper limit of the healthy range");
+			System.out.println("Your body weight is " + String.valueOf((int)weightPercent) + "% over the upper limit of the healthy range");
 		}
 		if (this.weight < lowerRange) {
 			weightPercent = 100*(this.weight/lowerRange);
-			System.out.println("Your body weight is " + String.valueOf(weightPercent) + "% under the lower limit of the healthy range");
+			System.out.println("Your body weight is " + String.valueOf((int)weightPercent) + "% under the lower limit of the healthy range");
 		}
 		else {
-			weightPercent = 0;
 			System.out.println("You are within the healthy body weight range");
 		}
-		System.out.println("The healthy weight range for your body type is between " + String.valueOf(lowerRange) + " kgs and " + String.valueOf(upperRange) + " kgs");
-
 		return ibwRange;
 	}
 	
