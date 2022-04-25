@@ -140,6 +140,10 @@ public class PersonalNutritionInfo{
 
 		
 		System.out.println("Your LBM is " + leanBodyMass());
+		
+		double[] ibwRange = calculateIBW();
+		double bmi = calculateBMI();
+		
 	}
 	
 	public double leanBodyMass(){
