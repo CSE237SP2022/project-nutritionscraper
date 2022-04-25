@@ -140,6 +140,7 @@ public class PersonalNutritionInfo{
 
 		
 		System.out.println("Your LBM is " + leanBodyMass());
+		System.out.println("Your BMR is " + basalMetabolicRate()); 
 		
 		double[] ibwRange = calculateIBW();
 		double bmi = calculateBMI();
