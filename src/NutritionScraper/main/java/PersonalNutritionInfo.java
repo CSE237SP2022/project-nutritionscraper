@@ -2,6 +2,7 @@ package NutritionScraper.main.java;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.lang.Math;
 
 public class PersonalNutritionInfo{
 	
@@ -138,6 +139,16 @@ public class PersonalNutritionInfo{
 			return Math.round(LBM * 100.0)/100.0;
 		}
 		return 0.00;
+	}
+	
+	
+	public double[] calculateIBW() {
+		double[] ibwRange = new double[2];
+		double lowerRange = Math.sqrt(18.5/this.height);
+		double upperRange = Math.sqrt(24.9/this.height);
+		ibwRange[0] = lowerRange;
+		ibwRange[1] = upperRange;
+		return ibwRange;
 	}
 	
 	
