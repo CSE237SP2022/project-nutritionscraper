@@ -54,16 +54,7 @@ public class PersonalNutritionInfo{
 	    String s = apScanner.next();
 	    if (isNumeric(s)) {
 	    	int weight = (int)Double.parseDouble(s);
-	    	if ((weight < 200) && (weight>0)) {
-	    		this.weight = weight;
-	    		System.out.println("Your weight is " + this.weight + "kg");
-
-	    	}
-	    	else {
-		    	this.weight = 0;
-		    	System.out.println("Your input is invalid. Expecting non negative integer value. "
-						+ "Setting Value to 0 (default)");
-	    	}
+	    	checksWeightInput(weight);
 	    }
 	   else {
 		   this.weight = 0;
@@ -72,6 +63,19 @@ public class PersonalNutritionInfo{
 	   }    
 	
 	}
+
+	private void checksWeightInput(int weight) {
+		if ((weight < 200) && (weight>0)) {
+			this.weight = weight;
+			System.out.println("Your weight is " + this.weight + "kg");
+
+		}
+		else {
+			this.weight = 0;
+			System.out.println("Your input is invalid. Expecting non negative integer value. "
+					+ "Setting Value to 0 (default)");
+		}
+	}
 	
 	public void inputHeight(Scanner apScanner) {
 
@@ -79,15 +83,7 @@ public class PersonalNutritionInfo{
 	    String s = apScanner.next();
 	    if (isNumeric(s)) {
 	    	int height = (int)Double.parseDouble(s);
-	    	if ((height < 220) && (height>56)) {
-	    		this.height = height;
-	    		 System.out.println("Your height is " + this.height + "cm");
-	  
-	    	}
-	    	else {
-		    	this.height = 0;
-		    	System.out.println("Your input is invalid. Setting Value to 0 (default)");
-	    	}
+	    	checkHeightValue(height);
 	    }
 	   else {
 		   this.height = 0;
@@ -95,6 +91,18 @@ public class PersonalNutritionInfo{
 					+ "Setting Value to 0 (default)");
 	   }    
 	
+	}
+
+	private void checkHeightValue(int height) {
+		if ((height < 220) && (height>56)) {
+			this.height = height;
+			 System.out.println("Your height is " + this.height + "cm");
+  
+		}
+		else {
+			this.height = 0;
+			System.out.println("Your input is invalid. Setting Value to 0 (default)");
+		}
 	}
 	
 	public void inputGender(Scanner apScanner) {
@@ -115,30 +123,25 @@ public class PersonalNutritionInfo{
 			System.out.println("Your gender is " + this.gender);
 	    }
 	    else {
-	    	String[] possibleGenders = {"F", "M"};
-	    	Random ran = new Random();
-	    	String random_gender = possibleGenders[ran.nextInt(possibleGenders.length)];
-	    	this.gender = random_gender;
+	    	randomizesGender();
 	    	System.out.println("Your input is invalid. Your randomly generated gender is " + this.gender);
 	    }
 		      
 
 	}
+
+	private void randomizesGender() {
+		String[] possibleGenders = {"F", "M"};
+		Random ran = new Random();
+		String random_gender = possibleGenders[ran.nextInt(possibleGenders.length)];
+		this.gender = random_gender;
+	}
 	public void setUp(){
 		Scanner apScanner = new Scanner(System.in);
-		
-		// get weight
 		inputWeight(apScanner);
-
-		
-		// get height
 		inputHeight(apScanner);
-
-		
-		// get gender
 		inputGender(apScanner);
 
-		
 		System.out.println("Your LBM is " + leanBodyMass());
 		System.out.println("Your BMR is " + basalMetabolicRate()); 
 		
@@ -197,6 +200,11 @@ public class PersonalNutritionInfo{
 		ibwRange[0] = lowerRange;
 		ibwRange[1] = upperRange;
 		System.out.print("The healthy weight range for your body type is between " + String.valueOf((int)lowerRange) + " kgs and " + String.valueOf((int)upperRange) + " kgs. ");
+		calculateWeightRanges(lowerRange, upperRange);
+		return ibwRange;
+	}
+
+	private void calculateWeightRanges(double lowerRange, double upperRange) {
 		double weightPercent;
 		if (this.weight > upperRange) {
 			weightPercent = 100*(this.weight/upperRange);
@@ -209,7 +217,6 @@ public class PersonalNutritionInfo{
 		else {
 			System.out.println("You are within the healthy body weight range");
 		}
-		return ibwRange;
 	}
 	
 	
