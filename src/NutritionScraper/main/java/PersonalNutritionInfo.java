@@ -179,16 +179,16 @@ public class PersonalNutritionInfo{
 	public double calculateBMI() {
 		double bmi = (double)(this.weight/Math.pow((double)this.height/100,2));
 		if (bmi < 18.5) {
-			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as underweight");
+			System.out.println("Your BMI is " + String.format("%.2f",bmi) + " which is classified as underweight");
 		}
 		else if (bmi >= 18.5 & bmi <=24.9) {
-			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as healthy");
+			System.out.println("Your BMI is " + String.format("%.2f",bmi) + " which is classified as healthy");
 		}
 		else if (bmi >= 25.0 & bmi <=29.9) {
-			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as overweight");
+			System.out.println("Your BMI is " + String.format("%.2f",bmi) + " which is classified as overweight");
 		}
 		else {
-			System.out.println("Your BMI is " + String.valueOf(bmi) + " which is classified as obese");
+			System.out.println("Your BMI is " + String.format("%.2f",bmi) + " which is classified as obese");
 		}
 		return bmi;
 	}
@@ -199,7 +199,7 @@ public class PersonalNutritionInfo{
 		double upperRange = 24.9*Math.pow((double)this.height/100,2);
 		ibwRange[0] = lowerRange;
 		ibwRange[1] = upperRange;
-		System.out.print("The healthy weight range for your body type is between " + String.valueOf((int)lowerRange) + " kgs and " + String.valueOf((int)upperRange) + " kgs. ");
+		System.out.print("The healthy weight range for your body type is between " + String.format("%.2f",lowerRange) + " kgs and " +  String.format("%.2f",upperRange) + " kgs.");
 		calculateWeightRanges(lowerRange, upperRange);
 		return ibwRange;
 	}
