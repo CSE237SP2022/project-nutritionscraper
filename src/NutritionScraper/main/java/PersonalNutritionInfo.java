@@ -146,6 +146,7 @@ public class PersonalNutritionInfo{
 		System.out.println("Your BMR is " + basalMetabolicRate()); 
 		
 		double[] ibwRange = calculateIBW();
+		calculateWeightRanges(ibwRange[0], ibwRange[1]);
 		double bmi = calculateBMI();
 		
 	}
