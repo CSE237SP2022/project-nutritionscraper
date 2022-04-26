@@ -208,11 +208,11 @@ public class PersonalNutritionInfo{
 		double weightPercent;
 		if (this.weight > upperRange) {
 			weightPercent = 100*(this.weight/upperRange);
-			System.out.println("Your body weight is " + String.valueOf((int)weightPercent) + "% over the upper limit of the healthy range");
+			System.out.println("Your body weight is " +  String.format("%.2f",weightPercent) + "% over the upper limit of the healthy range");
 		}
 		if (this.weight < lowerRange) {
 			weightPercent = 100*(this.weight/lowerRange);
-			System.out.println("Your body weight is " + String.valueOf((int)weightPercent) + "% under the lower limit of the healthy range");
+			System.out.println("Your body weight is " + String.format("%.2f",weightPercent) + "% under the lower limit of the healthy range");
 		}
 		else {
 			System.out.println("You are within the healthy body weight range");
