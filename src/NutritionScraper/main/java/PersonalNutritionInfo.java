@@ -146,7 +146,6 @@ public class PersonalNutritionInfo{
 		System.out.println("Your BMR is " + basalMetabolicRate()); 
 		
 		double[] ibwRange = calculateIBW();
-		calculateWeightRanges(ibwRange[0], ibwRange[1]);
 		double bmi = calculateBMI();
 		
 	}
@@ -211,7 +210,7 @@ public class PersonalNutritionInfo{
 			weightPercent = 100*(this.weight/upperRange);
 			System.out.println("Your body weight is " +  String.format("%.2f",weightPercent) + "% over the upper limit of the healthy range");
 		}
-		if (this.weight < lowerRange) {
+		else if (this.weight < lowerRange) {
 			weightPercent = 100*(this.weight/lowerRange);
 			System.out.println("Your body weight is " + String.format("%.2f",weightPercent) + "% under the lower limit of the healthy range");
 		}
