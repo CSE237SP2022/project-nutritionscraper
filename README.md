@@ -12,8 +12,8 @@
 	- Accomplished tasks: Split the original webscraping class into two separate classes; one for controlling the web scraper, and one for parsing the output of the webscraper. This required that many methods be broken up into methods which handle smaller tasks. Additionally, this required a complete reworking of the unit tests. In each class' respective branch, there is a unit test file which the functionality of each new method. It should be more obvious to the user what each unit test does now. The overall functionality of the script remains largely the same aside from the methods being broken up. However, one change that should be good for future functionality is that the output of the web scraper is now in the format of a doubly nested array list. This means that the formatted printing is its own method, which means that CSV output should be significantly easier in the next iteration. I also added the ability for the user to select certain nutrients when running the program.
 	- Tasks for next time: fix repository structure so that everything works cleanly together (some things are a little finnicky). Coding tasks will consist of adding the diet planning module. This will consist of outputting a diet plan for the user based on their physioligical traits and their preferred foods. This can be formulated as a constrained least squares optimization problem, where the constraints are that each free variable (i.e. the food amount) will be >=0. 
 
--Iteration 3:
-	-wrote methods for calculating the BMI and optimal weight of user, as well as giving the user's weight class/health. Also wrote unit tests for these methods.
+- Iteration 3:
+	- Wrote methods for calculating the BMI and optimal weight of user, as well as giving the user's weight class/health. Also wrote unit tests for these methods.
 
 ### Efimia user story 
 - Iteration 1:
