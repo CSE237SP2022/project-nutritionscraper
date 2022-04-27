@@ -120,7 +120,7 @@ public class Exercise {
 	}
 	
 	public static void main (String[]args) {
-		Exercise exercise = new Exercise(); 
-		exercise.setUp();
+		Exercise ex = new Exercise(); 
+		ex.setUp();
 	}
 }
