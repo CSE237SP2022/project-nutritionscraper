@@ -161,5 +161,61 @@ public class TestPersonalNutritionInfo {
 		double lbm = testPersonalNutrition.leanBodyMass();
 		assertEquals(0.00, lbm);
 	}
+	
+	@Test 
+	void calculateBMIUnderWeight() {
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.setHeight(150);
+		testPersonalNutrition.setWeight(36);
+		double bmi = testPersonalNutrition.calculateBMI();
+		assertEquals(16.0, bmi);
+	}
+
+	@Test
+	void calculateBMIHealthyWeight() {
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.setHeight(200);
+		testPersonalNutrition.setWeight(74);
+		double bmi = testPersonalNutrition.calculateBMI();
+		assertEquals(18.5, bmi);
+	}
+	
+	@Test
+	void calculateBMIOverWeight() {
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.setHeight(150);
+		testPersonalNutrition.setWeight(63);
+		double bmi = testPersonalNutrition.calculateBMI();
+		assertEquals(28, bmi);
+	}
+	
+	@Test
+	void calculateBMIObese() {
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.setHeight(150);
+		testPersonalNutrition.setWeight(72);
+		double bmi = testPersonalNutrition.calculateBMI();
+		assertEquals(32, bmi);
+	}
+	
+	@Test
+	void calculateIBWLower() {
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.setHeight(150);
+		double[] ibw = testPersonalNutrition.calculateIBW();
+		assertEquals(41.625, ibw[0]);
+	}
+	
+	@Test
+	void calculateIBWUpper() {
+		PersonalNutritionInfo testPersonalNutrition = new PersonalNutritionInfo();
+		testPersonalNutrition.setHeight(150);
+		double[] ibw = testPersonalNutrition.calculateIBW();
+		assertEquals(56.025, ibw[1]);
+	}
+	
+	
+	
+	
 
 }
