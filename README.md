@@ -1,6 +1,6 @@
 # project-nutritionscraper
 ### Functionality of project 
-- PersonalNutrition Info.java takes in a users height, weight, and gender and outputs your lean body mass. The Excerise.java class calculates how many calories you would burn given your weight, activity level, and duration of activity. The WeightManagement.java takes in a persons basal metablic rate and how much weight they want to lose over a given period time and outputs how many calories you need to reach everyday. 
+- PersonalNutrition Info.java takes in a users height, weight, and gender and outputs your lean body mass, basal metabolic rate, BMI, and IBW. The Excerise.java class calculates how many calories you would burn given your weight, activity level, and duration of activity. The WeightManagement.java takes in a persons basal metablic rate and how much weight they want to lose over a given period time and outputs how many calories you need to reach everyday. 
 
 ### Daniel user story
 -  Iteration 1:
@@ -38,7 +38,7 @@ Iteration 2:
 - Tasks for the next iteration: Add additional functionality around diet planning so that the user can receive a personalized diet plan with food and biometric inputs
 
 Iteration 3: 
-- Accomplished Tasks: Created Exercise class and implementation within to calculate the calories burned based on the weight, activity intensity, and duration of the workout. 
+- Accomplished Tasks: Created Exercise class and implementation within to calculate the calories burned based on the weight, activity intensity, and duration of the workout. Wrote all of the helper methods and needed to get to the calculations. Contributed to testing. 
 
 ### Constance user story 
 Iteration 1:
