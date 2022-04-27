@@ -44,8 +44,11 @@ Iteration 1:
 - Tasks for next time: Write 1. JUnit tests for different functionalities, catching server errors and exceptions. 2. clean up NutritionDataScraper class code, following clean code principles. 
 
 Iteration 2:
-- Accomplished tasks (iteration 2): 1. Wrote JUnit tests for PersonalNutritionInfo. 2. Reformatted and applied clean code practices to PersonalNutritionInfo. 3. Cleaned up NutritionDataScraper class code 4. Upkept and majaged project tracking board.   
+- Accomplished tasks: 1. Wrote JUnit tests for PersonalNutritionInfo. 2. Reformatted and applied clean code practices to PersonalNutritionInfo. 3. Cleaned up NutritionDataScraper class code 4. Upkept and majaged project tracking board.   
 - Tasks for next time: 1. Explore how LBM(lean body mass) and BMR(basal metabolic rate) can add value to the foodItems in our input.txt file.
+
+Iteration 3:
+- Accomplished tasks: 1. Wrote test cases for exercise and weightmanagement. 2. Caught internal logic errors for both when it comes to re-prompting for inputs
 
 
 
