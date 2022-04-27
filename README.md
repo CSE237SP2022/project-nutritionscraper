@@ -35,6 +35,9 @@ Iteration 2:
 - Accomplished tasks: Implemented additional functionality by creating a new Java class to retrieve user inputs about height, weight, and gender and wrote methods to calculate the lean body mass and basal metabolic rate from the inputs to return back to users. These currently don't take in the activity level of the user. To improve from the last iteration, I cleaned up the files to ensure that only the necessary files were included in each of the branches and cleaned up the old methods by breaking them up and splitting into classes. 
 - Tasks for the next iteration: Add additional functionality around diet planning so that the user can receive a personalized diet plan with food and biometric inputs
 
+Iteration 3: 
+- Accomplished Tasks: Created Exercise class and implementation within to calculate the calories burned based on the weight, activity intensity, and duration of the workout. 
+
 ### Constance user story 
 Iteration 1:
 - Accomplished tasks: 1. Cleaned up the NutritionDataScraper output table, allowing it to exclude key value pairs exceptions in the scraping process. 2. Created and managed project tracking board, for project management and task assignment.   
