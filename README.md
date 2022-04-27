@@ -1,6 +1,6 @@
 # project-nutritionscraper
 ### Functionality of project 
-- PersonalNutrition Info.java takes in a users height, weight, and gender and outputs your lean body mass, basal metabolic rate, BMI, and IBW. The Excerise.java class calculates how many calories you would burn given your weight, activity level, and duration of activity. The WeightManagement.java takes in a persons basal metablic rate and how much weight they want to lose over a given period time and outputs how many calories you need to reach everyday. 
+- PersonalNutrition Info.java takes in a users height, weight, and gender and outputs your lean body mass, basal metabolic rate, body mass index, and ideal body weight. The Excerise.java class calculates how many calories you would burn given your weight, activity level, and duration of activity. The WeightManagement.java takes in a persons basal metablic rate and how much weight they want to lose over a given period time and outputs how many calories you need to reach everyday. 
 
 ### Daniel user story
 -  Iteration 1:
